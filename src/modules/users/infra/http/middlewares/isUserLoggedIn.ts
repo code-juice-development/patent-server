@@ -30,7 +30,7 @@ const isUserLoggedIn = async (
   const tokenProvider = container.resolve(TokenProvider);
 
   if (authorization === undefined) {
-    throw new AppError('You are not logged in', 401);
+    throw new AppError('Você não está logado', 401);
   }
 
   const [, token] = authorization.split(' ');
