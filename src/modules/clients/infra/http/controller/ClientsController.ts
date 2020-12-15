@@ -87,7 +87,7 @@ class UsersController {
     const cpf_verified = cpf ? String(cpf) : null;
     const cnpj_verified = cnpj ? String(cnpj) : null;
 
-    const users = await listClientsIndexedService.execute({
+    const { total, clients } = await listClientsIndexedService.execute({
       page: page_verified,
       rows: rows_verified,
       ordenation: ordenation_verified,
@@ -98,7 +98,10 @@ class UsersController {
       cnpj: cnpj_verified,
     });
 
-    return response.json(users);
+    response.header('Access-Control-Expose-Headers', 'X-Total-Count');
+    response.header('X-Total-Count', String(total));
+
+    return response.json(clients);
   }
 }
 

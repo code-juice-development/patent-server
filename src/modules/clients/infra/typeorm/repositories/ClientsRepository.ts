@@ -2,6 +2,7 @@ import { Repository, getRepository } from 'typeorm';
 
 import IClientsRepository, {
   IDataFindIndexed,
+  IResultFindIndexed,
 } from '@modules/clients/repositories/IClientsRepository';
 
 import ICreateClientDTO from '@modules/clients/dtos/ICreateClientDTO';
@@ -97,7 +98,7 @@ class ClientsRepository implements IClientsRepository {
     rows,
     ordenation,
     filter,
-  }: IDataFindIndexed): Promise<Client[]> {
+  }: IDataFindIndexed): Promise<IResultFindIndexed> {
     const queryBuilder = this.repository.createQueryBuilder('clients');
 
     const filters = Object.fromEntries(
@@ -109,9 +110,9 @@ class ClientsRepository implements IClientsRepository {
     queryBuilder.take(rows);
     queryBuilder.orderBy(ordenation);
 
-    const clients = await queryBuilder.getMany();
+    const [clients, total] = await queryBuilder.getManyAndCount();
 
-    return clients;
+    return { total, clients };
   }
 }
 

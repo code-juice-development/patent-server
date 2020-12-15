@@ -22,6 +22,12 @@ interface IRequest {
   cnpj: string | null;
 }
 
+interface IResponse {
+  total: number;
+
+  clients: Client[];
+}
+
 @injectable()
 class ListClientsIndexedService {
   constructor(
@@ -37,15 +43,15 @@ class ListClientsIndexedService {
     phone,
     cpf,
     cnpj,
-  }: IRequest): Promise<Client[]> {
-    const users = await this.clientsRepository.findIndexed({
+  }: IRequest): Promise<IResponse> {
+    const { total, clients } = await this.clientsRepository.findIndexed({
       page,
       rows,
       ordenation,
       filter: { name, email, phone, cpf, cnpj },
     });
 
-    return users;
+    return { total, clients };
   }
 }
 

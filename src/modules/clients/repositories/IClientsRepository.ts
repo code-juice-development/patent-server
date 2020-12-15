@@ -1,7 +1,7 @@
 import ICreateClientDTO from '@modules/clients/dtos/ICreateClientDTO';
 import IUpdateClientDTO from '@modules/clients/dtos/IUpdateClientDTO';
 
-import Cliente from '@modules/clients/infra/typeorm/entities/Client';
+import Client from '@modules/clients/infra/typeorm/entities/Client';
 
 export interface IDataFindIndexed {
   page: number;
@@ -23,26 +23,32 @@ export interface IDataFindIndexed {
   };
 }
 
-interface IClientsRepository {
-  create(data: ICreateClientDTO): Promise<Cliente>;
+export interface IResultFindIndexed {
+  total: number;
 
-  update(data: IUpdateClientDTO): Promise<Cliente>;
+  clients: Client[];
+}
+
+interface IClientsRepository {
+  create(data: ICreateClientDTO): Promise<Client>;
+
+  update(data: IUpdateClientDTO): Promise<Client>;
 
   delete(id: string): Promise<void>;
 
-  findAll(): Promise<Cliente[]>;
+  findAll(): Promise<Client[]>;
 
-  findById(id: string): Promise<Cliente | undefined>;
+  findById(id: string): Promise<Client | undefined>;
 
-  findByEmail(id: string): Promise<Cliente | undefined>;
+  findByEmail(id: string): Promise<Client | undefined>;
 
-  findByPhone(id: string): Promise<Cliente | undefined>;
+  findByPhone(id: string): Promise<Client | undefined>;
 
-  findByCpf(id: string): Promise<Cliente | undefined>;
+  findByCpf(id: string): Promise<Client | undefined>;
 
-  findByCnpj(id: string): Promise<Cliente | undefined>;
+  findByCnpj(id: string): Promise<Client | undefined>;
 
-  findIndexed(data: IDataFindIndexed): Promise<Cliente[]>;
+  findIndexed(data: IDataFindIndexed): Promise<IResultFindIndexed>;
 }
 
 export default IClientsRepository;
