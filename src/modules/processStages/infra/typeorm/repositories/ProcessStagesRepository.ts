@@ -10,7 +10,7 @@ import IUpdateProcessStagesDTO from '@modules/processStages/dtos/IUpdateProcessS
 
 import ProcessStage from '@modules/processStages/infra/typeorm/entities/ProcessStage';
 
-class ClientsRepository implements IProcessStagesRepository {
+class ProcessStagesRepository implements IProcessStagesRepository {
   private repository: Repository<ProcessStage>;
 
   constructor() {
@@ -122,4 +122,4 @@ class ClientsRepository implements IProcessStagesRepository {
   }
 }
 
-export default ClientsRepository;
+export default ProcessStagesRepository;
