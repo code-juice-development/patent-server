@@ -7,22 +7,30 @@ import FakeTokenProvider from '@modules/users/providers/TokenProvider/fakes/Fake
 import CreateUserService from '@modules/users/services/CreateUserService';
 import CreateSessionService from '@modules/users/services/CreateSessionService';
 
-describe('Create Session Service', () => {
-  it('should be able to create a new Session', async () => {
-    const fakeUsersRepository = new FakeUsersRepository();
-    const fakeHashProvider = new FakeHashProvider();
-    const fakeTokenProvider = new FakeTokenProvider();
+let fakeUsersRepository: FakeUsersRepository;
+let fakeHashProvider: FakeHashProvider;
+let fakeTokenProvider: FakeTokenProvider;
+let createUserService: CreateUserService;
+let createSessionService: CreateSessionService;
 
-    const createUserService = new CreateUserService(
+describe('Create Session Service', () => {
+  beforeEach(() => {
+    fakeUsersRepository = new FakeUsersRepository();
+    fakeHashProvider = new FakeHashProvider();
+    fakeTokenProvider = new FakeTokenProvider();
+
+    createUserService = new CreateUserService(
       fakeUsersRepository,
       fakeHashProvider,
     );
-    const createSessionService = new CreateSessionService(
+    createSessionService = new CreateSessionService(
       fakeUsersRepository,
       fakeHashProvider,
       fakeTokenProvider,
     );
+  });
 
+  it('should be able to create a new Session', async () => {
     const user = await createUserService.execute({
       email: 'johndoe@example.com',
       name: 'John Doe',
@@ -39,16 +47,6 @@ describe('Create Session Service', () => {
   });
 
   it('should not be able to create a new Session with non existing User', async () => {
-    const fakeUsersRepository = new FakeUsersRepository();
-    const fakeHashProvider = new FakeHashProvider();
-    const fakeTokenProvider = new FakeTokenProvider();
-
-    const createSessionService = new CreateSessionService(
-      fakeUsersRepository,
-      fakeHashProvider,
-      fakeTokenProvider,
-    );
-
     expect(
       createSessionService.execute({
         email: 'johndoe@example.com',
@@ -58,20 +56,6 @@ describe('Create Session Service', () => {
   });
 
   it('should not be able to create a new Session with wrong password', async () => {
-    const fakeUsersRepository = new FakeUsersRepository();
-    const fakeHashProvider = new FakeHashProvider();
-    const fakeTokenProvider = new FakeTokenProvider();
-
-    const createUserService = new CreateUserService(
-      fakeUsersRepository,
-      fakeHashProvider,
-    );
-    const createSessionService = new CreateSessionService(
-      fakeUsersRepository,
-      fakeHashProvider,
-      fakeTokenProvider,
-    );
-
     await createUserService.execute({
       email: 'johndoe@example.com',
       name: 'John Doe',

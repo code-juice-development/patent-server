@@ -20,9 +20,9 @@ describe('Show Users Service', () => {
       password: 'root',
     });
 
-    const findUser = await showUserService.execute({ id: user.id });
+    const userFinded = await showUserService.execute({ id: user.id });
 
-    expect(user).toEqual(findUser);
+    expect(user).toEqual(userFinded);
   });
 
   it('should not be able to show a nonexistent User', async () => {

@@ -18,14 +18,18 @@ describe('Update Users Service', () => {
       password: 'root',
     });
 
-    const updateUser = await updateUserService.execute({
-      id: user.id,
+    const { id } = user;
+
+    await updateUserService.execute({
+      id,
       email: 'johnruan@example.com',
       name: 'John Ruan',
     });
 
-    expect(updateUser.id).toBe(user.id);
-    expect(updateUser.name).toBe('John Ruan');
-    expect(updateUser.email).toBe('johnruan@example.com');
+    const userFinded = await fakeUsersRepository.findById(id);
+
+    expect(userFinded?.id).toBe(id);
+    expect(userFinded?.name).toBe('John Ruan');
+    expect(userFinded?.email).toBe('johnruan@example.com');
   });
 });
