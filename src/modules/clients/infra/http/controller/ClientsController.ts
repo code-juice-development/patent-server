@@ -78,15 +78,24 @@ class UsersController {
       ListClientsIndexedService,
     );
 
+    const page_verified = Number(page ?? 0);
+    const rows_verified = Number(rows ?? 10);
+    const ordenation_verified = String(ordenation ?? 'name');
+    const name_verified = name ? String(name) : null;
+    const email_verified = email ? String(email) : null;
+    const phone_verified = phone ? String(phone) : null;
+    const cpf_verified = cpf ? String(cpf) : null;
+    const cnpj_verified = cnpj ? String(cnpj) : null;
+
     const users = await listClientsIndexedService.execute({
-      page: Number(page ?? 0),
-      rows: Number(rows ?? 10),
-      ordenation: String(ordenation ?? ''),
-      name: String(name ?? ''),
-      email: String(email ?? ''),
-      phone: String(phone ?? ''),
-      cpf: String(cpf ?? ''),
-      cnpj: String(cnpj ?? ''),
+      page: page_verified,
+      rows: rows_verified,
+      ordenation: ordenation_verified,
+      name: name_verified,
+      email: email_verified,
+      phone: phone_verified,
+      cpf: cpf_verified,
+      cnpj: cnpj_verified,
     });
 
     return response.json(users);

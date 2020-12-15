@@ -57,39 +57,39 @@ class ClientsRepository implements IClientsRepository {
   }
 
   public async findAll(): Promise<Client[]> {
-    const users = await this.repository.find();
+    const clients = await this.repository.find();
 
-    return users;
+    return clients;
   }
 
   public async findById(id: string): Promise<Client | undefined> {
-    const user = await this.repository.findOne(id);
+    const client = await this.repository.findOne(id);
 
-    return user;
+    return client;
   }
 
   public async findByEmail(email: string): Promise<Client | undefined> {
-    const user = await this.repository.findOne({ email });
+    const client = await this.repository.findOne({ email });
 
-    return user;
+    return client;
   }
 
   public async findByPhone(phone: string): Promise<Client | undefined> {
-    const user = await this.repository.findOne({ phone });
+    const client = await this.repository.findOne({ phone });
 
-    return user;
+    return client;
   }
 
   public async findByCpf(cpf: string): Promise<Client | undefined> {
-    const user = await this.repository.findOne({ cpf });
+    const client = await this.repository.findOne({ cpf });
 
-    return user;
+    return client;
   }
 
   public async findByCnpj(cnpj: string): Promise<Client | undefined> {
-    const user = await this.repository.findOne({ cnpj });
+    const client = await this.repository.findOne({ cnpj });
 
-    return user;
+    return client;
   }
 
   public async findIndexed({
@@ -109,9 +109,9 @@ class ClientsRepository implements IClientsRepository {
     queryBuilder.take(rows);
     queryBuilder.orderBy(ordenation);
 
-    const users = await queryBuilder.getMany();
+    const clients = await queryBuilder.getMany();
 
-    return users;
+    return clients;
   }
 }
 

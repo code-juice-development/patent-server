@@ -11,15 +11,15 @@ export interface IDataFindIndexed {
   ordenation: string;
 
   filter: {
-    name: string;
+    name: string | null;
 
-    email: string;
+    email: string | null;
 
-    phone: string;
+    phone: string | null;
 
-    cpf: string;
+    cpf: string | null;
 
-    cnpj: string;
+    cnpj: string | null;
   };
 }
 

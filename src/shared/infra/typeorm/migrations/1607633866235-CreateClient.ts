@@ -35,6 +35,16 @@ export class CreateClient1607633866235 implements MigrationInterface {
             type: 'varchar',
             isNullable: true,
           },
+          {
+            name: 'created_at',
+            type: 'timestamp',
+            default: 'now()',
+          },
+          {
+            name: 'updated_at',
+            type: 'timestamp',
+            default: 'now()',
+          },
         ],
       }),
     );
