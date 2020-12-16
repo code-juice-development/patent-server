@@ -44,7 +44,7 @@ describe('Show Process Stage Service', () => {
   it('should not be able to show a inexistent Process Stage', async () => {
     expect(
       showProcessStageService.execute({
-        id: 'nonexistent-id',
+        id: 'inexistent-id',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

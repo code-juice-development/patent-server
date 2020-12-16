@@ -69,11 +69,13 @@ describe('List Process Stages Indexed Service', () => {
       },
     );
 
+    // Count
+    expect(responseProcessStageReavaliation.total).toEqual(2);
+
     // Reavaliation
     expect(responseProcessStageReavaliation.processStages).toContain(
       processStageReavaliation,
     );
-
     expect(responseProcessStageReavaliation.processStages).not.toContain(
       processStageConcluded,
     );
@@ -82,7 +84,6 @@ describe('List Process Stages Indexed Service', () => {
     expect(responseProcessStageConcluded.processStages).toContain(
       processStageConcluded,
     );
-
     expect(responseProcessStageConcluded.processStages).not.toContain(
       processStageReavaliation,
     );

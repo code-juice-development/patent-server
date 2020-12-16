@@ -21,7 +21,7 @@ describe('Update Process Stage Service', () => {
   });
 
   it('should be able to update a Process Stages', async () => {
-    const processStage = await createProcessStageService.execute({
+    const { id } = await createProcessStageService.execute({
       name: 'Reavaliação',
       code: 'X4568',
       description: 'Reavaliar o requerimento pendente no protocolo',
@@ -32,13 +32,11 @@ describe('Update Process Stage Service', () => {
       model_email: '',
     });
 
-    const { id } = processStage;
-
     await updateProcessStageService.execute({
       id,
       name: 'Concluído',
       code: 'C4558',
-      description: 'Concluído o requerimento pendente no protocolo',
+      description: 'Concluído o requerimento',
       deadline: '15',
       send_message: true,
       model_message: 'Oi, etapa Concluída',
@@ -46,19 +44,17 @@ describe('Update Process Stage Service', () => {
       model_email: 'AAAA',
     });
 
-    const processStageFinded = await fakeProcessStagesRepository.findById(id);
+    const processStage = await fakeProcessStagesRepository.findById(id);
 
-    expect(processStageFinded?.id).toBe(id);
-    expect(processStageFinded?.name).toBe('Concluído');
-    expect(processStageFinded?.code).toBe('C4558');
-    expect(processStageFinded?.description).toBe(
-      'Concluído o requerimento pendente no protocolo',
-    );
-    expect(processStageFinded?.deadline).toBe('15');
-    expect(processStageFinded?.send_message).toBe(true);
-    expect(processStageFinded?.model_message).toBe('Oi, etapa Concluída');
-    expect(processStageFinded?.send_email).toBe(false);
-    expect(processStageFinded?.model_email).toBe('AAAA');
+    expect(processStage?.id).toBe(id);
+    expect(processStage?.name).toBe('Concluído');
+    expect(processStage?.code).toBe('C4558');
+    expect(processStage?.description).toBe('Concluído o requerimento');
+    expect(processStage?.deadline).toBe('15');
+    expect(processStage?.send_message).toBe(true);
+    expect(processStage?.model_message).toBe('Oi, etapa Concluída');
+    expect(processStage?.send_email).toBe(false);
+    expect(processStage?.model_email).toBe('AAAA');
   });
 
   it('should not be able to update a Process Stage with the same name', async () => {
@@ -73,7 +69,7 @@ describe('Update Process Stage Service', () => {
       model_email: '',
     });
 
-    const processStage = await createProcessStageService.execute({
+    const { id } = await createProcessStageService.execute({
       name: 'Reavaliado',
       code: 'X550',
       description: '',
@@ -83,8 +79,6 @@ describe('Update Process Stage Service', () => {
       send_email: false,
       model_email: '',
     });
-
-    const { id } = processStage;
 
     expect(
       updateProcessStageService.execute({
@@ -113,7 +107,7 @@ describe('Update Process Stage Service', () => {
       model_email: '',
     });
 
-    const processStage = await createProcessStageService.execute({
+    const { id } = await createProcessStageService.execute({
       name: 'Reavaliado',
       code: 'X560',
       description: '',
@@ -123,8 +117,6 @@ describe('Update Process Stage Service', () => {
       send_email: false,
       model_email: '',
     });
-
-    const { id } = processStage;
 
     expect(
       updateProcessStageService.execute({

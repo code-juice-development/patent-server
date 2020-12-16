@@ -18,7 +18,7 @@ describe('List Process Stages Service', () => {
     );
   });
 
-  it('should be able to list a Process Stages', async () => {
+  it('should be able to list all Process Stages', async () => {
     const processStageReavaliation = await createProcessStageService.execute({
       name: 'Reavaliação',
       code: 'X4568',

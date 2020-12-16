@@ -19,7 +19,7 @@ describe('Delete Process Stage Service', () => {
   });
 
   it('should be able to delete a Process Stage', async () => {
-    const processStage = await createProcessStageService.execute({
+    const { id } = await createProcessStageService.execute({
       name: 'Reavaliação',
       code: 'X4568',
       description: 'Reavaliar o requerimento pendente no protocolo',
@@ -30,12 +30,10 @@ describe('Delete Process Stage Service', () => {
       model_email: '',
     });
 
-    await deleteProcessStageService.execute({ id: processStage.id });
+    await deleteProcessStageService.execute({ id });
 
-    const findedProcessStage = await fakeProcessStagesRepository.findById(
-      processStage.id,
-    );
+    const processStage = await fakeProcessStagesRepository.findById(id);
 
-    expect(findedProcessStage).toBeUndefined();
+    expect(processStage).toBeUndefined();
   });
 });
