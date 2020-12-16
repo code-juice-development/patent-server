@@ -34,7 +34,7 @@ class UpdateClientService {
     cpf,
     cnpj,
   }: IRequest): Promise<Client> {
-    const userWithSameEmail = await this.clientsRepository.findByCpf(email);
+    const userWithSameEmail = await this.clientsRepository.findByEmail(email);
 
     if (userWithSameEmail && userWithSameEmail.id !== id) {
       throw new AppError('Já existe um cliente cadastrado com esse E-mail');
@@ -46,16 +46,24 @@ class UpdateClientService {
       throw new AppError('Já existe um cliente cadastrado com esse Telefone');
     }
 
-    const userWithSameCpf = await this.clientsRepository.findByCpf(cpf);
-
-    if (userWithSameCpf && userWithSameCpf.id !== id) {
-      throw new AppError('Já existe um cliente cadastrado com esse CPF');
+    if (!cpf && !cnpj) {
+      throw new AppError('É necessário informar ao menos um CPF ou CNPJ');
     }
 
-    const userWithSameCnpj = await this.clientsRepository.findByCpf(cnpj);
+    if (cpf) {
+      const userWithSameCpf = await this.clientsRepository.findByCpf(cpf);
 
-    if (userWithSameCnpj && userWithSameCnpj.id !== id) {
-      throw new AppError('Já existe um cliente cadastrado com esse CNPJ');
+      if (userWithSameCpf && userWithSameCpf.id !== id) {
+        throw new AppError('Já existe um cliente cadastrado com esse CPF');
+      }
+    }
+
+    if (cnpj) {
+      const userWithSameCnpj = await this.clientsRepository.findByCnpj(cnpj);
+
+      if (userWithSameCnpj && userWithSameCnpj.id !== id) {
+        throw new AppError('Já existe um cliente cadastrado com esse CNPJ');
+      }
     }
 
     const user = await this.clientsRepository.update({

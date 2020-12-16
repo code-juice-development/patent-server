@@ -40,13 +40,13 @@ interface IClientsRepository {
 
   findById(id: string): Promise<Client | undefined>;
 
-  findByEmail(id: string): Promise<Client | undefined>;
+  findByEmail(email: string): Promise<Client | undefined>;
 
-  findByPhone(id: string): Promise<Client | undefined>;
+  findByPhone(phone: string): Promise<Client | undefined>;
 
-  findByCpf(id: string): Promise<Client | undefined>;
+  findByCpf(cpf: string): Promise<Client | undefined>;
 
-  findByCnpj(id: string): Promise<Client | undefined>;
+  findByCnpj(cnpj: string): Promise<Client | undefined>;
 
   findIndexed(data: IDataFindIndexed): Promise<IResultFindIndexed>;
 }

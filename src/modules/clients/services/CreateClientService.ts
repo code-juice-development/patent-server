@@ -43,16 +43,24 @@ class CreateClientService {
       throw new AppError('Já existe um cliente cadastrado com esse Telefone');
     }
 
-    const userWithSameCpf = await this.clientsRepository.findByCpf(cpf);
-
-    if (userWithSameCpf) {
-      throw new AppError('Já existe um cliente cadastrado com esse CPF');
+    if (!cpf && !cnpj) {
+      throw new AppError('É necessário informar ao menos um CPF ou CNPJ');
     }
 
-    const userWithSameCnpj = await this.clientsRepository.findByCnpj(cnpj);
+    if (cpf) {
+      const userWithSameCpf = await this.clientsRepository.findByCpf(cpf);
 
-    if (userWithSameCnpj) {
-      throw new AppError('Já existe um cliente cadastrado com esse CNPJ');
+      if (userWithSameCpf) {
+        throw new AppError('Já existe um cliente cadastrado com esse CPF');
+      }
+    }
+
+    if (cnpj) {
+      const userWithSameCnpj = await this.clientsRepository.findByCnpj(cnpj);
+
+      if (userWithSameCnpj) {
+        throw new AppError('Já existe um cliente cadastrado com esse CNPJ');
+      }
     }
 
     const user = await this.clientsRepository.create({
