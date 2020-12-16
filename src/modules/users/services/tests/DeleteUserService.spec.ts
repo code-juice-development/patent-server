@@ -12,18 +12,16 @@ describe('Delete User Service', () => {
   });
 
   it('should be able to delete a User', async () => {
-    const user = await fakeUsersRepository.create({
+    const { id } = await fakeUsersRepository.create({
       email: 'johndoe@example.com',
       name: 'John Doe',
       password: 'root',
     });
 
-    const { id } = user;
-
     await deleteUserService.execute({ id });
 
-    const findUser = await fakeUsersRepository.findById(id);
+    const user = await fakeUsersRepository.findById(id);
 
-    expect(findUser).toEqual(undefined);
+    expect(user).toEqual(undefined);
   });
 });

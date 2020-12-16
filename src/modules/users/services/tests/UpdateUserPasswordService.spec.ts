@@ -19,35 +19,35 @@ describe('Update User Password Service', () => {
   });
 
   it('should be able to update a User password', async () => {
-    const user = await fakeUsersRepository.create({
+    const { id, password } = await fakeUsersRepository.create({
       email: 'johndoe@example.com',
       name: 'John Doe',
       password: 'root',
     });
 
     await updateUserPasswordService.execute({
-      id: user.id,
+      id,
       password: 'root',
       new_password: 'admin',
     });
 
     expect(
-      fakeHashProvider.compareHash(String(user.password), 'admin'),
+      fakeHashProvider.compareHash(String(password), 'admin'),
     ).toBeTruthy();
   });
 
   it('should be not able to update a password of incorret User', async () => {
     expect(
       updateUserPasswordService.execute({
-        id: 'non-existent-id',
+        id: 'inexistent-id',
         password: 'root',
         new_password: 'admin',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
 
-  it('should not be able to update a password if informed of the incorrect old password ', async () => {
-    const user = await fakeUsersRepository.create({
+  it('should not be able to update a password if informed the old password incorrectly', async () => {
+    const { id } = await fakeUsersRepository.create({
       email: 'johndoe@example.com',
       name: 'John Doe',
       password: 'root',
@@ -55,7 +55,7 @@ describe('Update User Password Service', () => {
 
     expect(
       updateUserPasswordService.execute({
-        id: user.id,
+        id,
         password: 'admin',
         new_password: 'root',
       }),

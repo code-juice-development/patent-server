@@ -17,7 +17,7 @@ describe('Create User Service', () => {
     );
   });
 
-  it('should be able to create a new User', async () => {
+  it('should be able to create a User', async () => {
     const user = await createUserService.execute({
       email: 'johndoe@example.com',
       name: 'John Doe',

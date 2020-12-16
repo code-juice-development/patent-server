@@ -12,13 +12,11 @@ describe('Update Users Service', () => {
   });
 
   it('should be able to update a User', async () => {
-    const user = await fakeUsersRepository.create({
+    const { id } = await fakeUsersRepository.create({
       email: 'johndoe@example.com',
       name: 'John Doe',
       password: 'root',
     });
-
-    const { id } = user;
 
     await updateUserService.execute({
       id,
@@ -26,10 +24,10 @@ describe('Update Users Service', () => {
       name: 'John Ruan',
     });
 
-    const userFinded = await fakeUsersRepository.findById(id);
+    const user = await fakeUsersRepository.findById(id);
 
-    expect(userFinded?.id).toBe(id);
-    expect(userFinded?.name).toBe('John Ruan');
-    expect(userFinded?.email).toBe('johnruan@example.com');
+    expect(user?.id).toBe(id);
+    expect(user?.name).toBe('John Ruan');
+    expect(user?.email).toBe('johnruan@example.com');
   });
 });

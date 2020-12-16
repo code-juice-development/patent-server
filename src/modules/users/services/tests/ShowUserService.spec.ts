@@ -20,15 +20,17 @@ describe('Show Users Service', () => {
       password: 'root',
     });
 
-    const userFinded = await showUserService.execute({ id: user.id });
+    const { id } = user;
+
+    const userFinded = await showUserService.execute({ id });
 
     expect(user).toEqual(userFinded);
   });
 
-  it('should not be able to show a nonexistent User', async () => {
+  it('should not be able to show a inexistent User', async () => {
     expect(
       showUserService.execute({
-        id: 'nonexistent-id',
+        id: 'inexistent-id',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

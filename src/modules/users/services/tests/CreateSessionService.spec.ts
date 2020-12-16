@@ -30,7 +30,7 @@ describe('Create Session Service', () => {
     );
   });
 
-  it('should be able to create a new Session', async () => {
+  it('should be able to create a Session', async () => {
     const user = await createUserService.execute({
       email: 'johndoe@example.com',
       name: 'John Doe',
@@ -46,7 +46,7 @@ describe('Create Session Service', () => {
     expect(response.user).toEqual(user);
   });
 
-  it('should not be able to create a new Session with non existing User', async () => {
+  it('should not be able to create a new Session with inexistent User', async () => {
     expect(
       createSessionService.execute({
         email: 'johndoe@example.com',
