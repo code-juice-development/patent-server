@@ -11,6 +11,9 @@ import ClientsRepository from '@modules/clients/infra/typeorm/repositories/Clien
 import IProcessStagesRepository from '@modules/processStages/repositories/IProcessStagesRepository';
 import ProcessStagesRepository from '@modules/processStages/infra/typeorm/repositories/ProcessStagesRepository';
 
+import IProcessRepository from '@modules/process/repositories/IProcessesRepository';
+import ProcessesRepository from '@modules/process/infra/typeorm/repositories/ProcessesRepository';
+
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
   UsersRepository,
@@ -24,4 +27,9 @@ container.registerSingleton<IClientsRepository>(
 container.registerSingleton<IProcessStagesRepository>(
   'ProcessStagesRepository',
   ProcessStagesRepository,
+);
+
+container.registerSingleton<IProcessRepository>(
+  'ProcessRepository',
+  ProcessesRepository,
 );
