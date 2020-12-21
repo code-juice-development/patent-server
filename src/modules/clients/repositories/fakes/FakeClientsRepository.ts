@@ -10,7 +10,7 @@ import IUpdateClientDTO from '@modules/clients/dtos/IUpdateClientDTO';
 
 import Client from '@modules/clients/infra/typeorm/entities/Client';
 
-class ClientsRepository implements IClientsRepository {
+class FakeClientsRepository implements IClientsRepository {
   private clients: Client[];
 
   constructor() {
@@ -121,12 +121,12 @@ class ClientsRepository implements IClientsRepository {
 
     const total = this.clients.length;
 
-    const filteredClients = this.clients.filter((processStage) => {
-      if (name && processStage.name !== name) return false;
-      if (email && processStage.email !== email) return false;
-      if (phone && processStage.phone !== phone) return false;
-      if (cpf && processStage.cpf !== cpf) return false;
-      if (cnpj && processStage.cnpj !== cnpj) return false;
+    const filteredClients = this.clients.filter((client) => {
+      if (name && client.name !== name) return false;
+      if (email && client.email !== email) return false;
+      if (phone && client.phone !== phone) return false;
+      if (cpf && client.cpf !== cpf) return false;
+      if (cnpj && client.cnpj !== cnpj) return false;
 
       return true;
     });
@@ -137,4 +137,4 @@ class ClientsRepository implements IClientsRepository {
   }
 }
 
-export default ClientsRepository;
+export default FakeClientsRepository;
