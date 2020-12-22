@@ -131,13 +131,15 @@ class ClientsRepository implements IProcessStagesRepository {
     const total = this.processStages.length;
 
     const filteredProcessStages = this.processStages.filter((processStage) => {
-      if (name && processStage.name !== name) return false;
-      if (code && processStage.code !== code) return false;
-      if (description && processStage.description !== description) return false;
-      if (deadline && processStage.deadline !== deadline) return false;
-      if (send_message && processStage.send_message !== send_message)
+      if (name !== null && processStage.name !== name) return false;
+      if (code !== null && processStage.code !== code) return false;
+      if (description !== null && processStage.description !== description)
         return false;
-      if (send_email && processStage.send_email !== send_email) return false;
+      if (deadline !== null && processStage.deadline !== deadline) return false;
+      if (send_message !== null && processStage.send_message !== send_message)
+        return false;
+      if (send_email !== null && processStage.send_email !== send_email)
+        return false;
 
       return true;
     });

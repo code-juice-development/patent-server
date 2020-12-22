@@ -12,34 +12,34 @@ import isUserLoggedIn from '@modules/users/infra/http/middlewares/isUserLoggedIn
 
 const processStagesRouter = Router();
 
-const clientsController = new ProcessStagesController();
+const processStagesController = new ProcessStagesController();
 
 processStagesRouter.use(isUserLoggedIn);
 
 processStagesRouter.post(
   '/',
   createProcessStagesMiddleware,
-  clientsController.create,
+  processStagesController.create,
 );
 processStagesRouter.put(
   '/:id',
   updateProcessStageMiddleware,
-  clientsController.update,
+  processStagesController.update,
 );
 processStagesRouter.delete(
   '/:id',
   deleteProcessStageMiddleware,
-  clientsController.delete,
+  processStagesController.delete,
 );
 processStagesRouter.get(
   '/:id',
   showProcessStageMiddleware,
-  clientsController.show,
+  processStagesController.show,
 );
 processStagesRouter.get(
   '/',
   indexProcessStagesMiddleware,
-  clientsController.index,
+  processStagesController.index,
 );
 
 export default processStagesRouter;

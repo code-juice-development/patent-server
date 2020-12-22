@@ -4,7 +4,10 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+
+import ProcessStatusStage from '@modules/processStatusStages/infra/typeorm/entities/ProcessStatusStage';
 
 @Entity('process_stages')
 class ProcessStage {
@@ -34,6 +37,12 @@ class ProcessStage {
 
   @Column()
   model_email: string;
+
+  @OneToMany(
+    (_type) => ProcessStatusStage,
+    (processStatusStage) => processStatusStage.processes,
+  )
+  process_status_stages: ProcessStatusStage[];
 
   @CreateDateColumn()
   created_at: string;

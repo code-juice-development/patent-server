@@ -108,7 +108,7 @@ class ProcessStagesRepository implements IProcessStagesRepository {
     const queryBuilder = this.repository.createQueryBuilder('process_stages');
 
     const filters = Object.fromEntries(
-      Object.entries(filter).filter((actualFilter) => actualFilter[1]),
+      Object.entries(filter).filter((actualFilter) => actualFilter[1] !== null),
     );
 
     queryBuilder.where(filters);

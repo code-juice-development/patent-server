@@ -60,7 +60,7 @@ describe('List Process Stages Indexed Service', () => {
         page: 0,
         rows: 10,
         ordenation: '',
-        name: '',
+        name: null,
         code: null,
         description: null,
         deadline: null,
