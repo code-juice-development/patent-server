@@ -27,7 +27,7 @@ interface IRequest {
 @injectable()
 class UpdateProcessService {
   constructor(
-    @inject('ProcessRepository')
+    @inject('ProcessesRepository')
     private processRepository: IProcessRepository,
   ) {}
 

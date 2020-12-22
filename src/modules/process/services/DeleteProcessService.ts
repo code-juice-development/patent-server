@@ -9,7 +9,7 @@ interface IRequest {
 @injectable()
 class DeleteProcessService {
   constructor(
-    @inject('ProcessRepository')
+    @inject('ProcessesRepository')
     private processRepository: IProcessRepository,
   ) {}
 

@@ -6,9 +6,11 @@ import {
   JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
 import Client from '@modules/clients/infra/typeorm/entities/Client';
+import ProcessStatusStage from '@modules/processStatusStages/infra/typeorm/entities/ProcessStatusStage';
 
 @Entity('processes')
 class Process {
@@ -41,6 +43,12 @@ class Process {
   })
   @JoinColumn({ name: 'client_id', referencedColumnName: 'id' })
   clients: Client;
+
+  @OneToMany(
+    (_type) => ProcessStatusStage,
+    (processStatusStage) => processStatusStage.processes,
+  )
+  process_status_stages: ProcessStatusStage[];
 
   @CreateDateColumn()
   created_at: string;

@@ -104,7 +104,7 @@ class ProcessesRepository implements IProcessRepository {
     const queryBuilder = this.repository.createQueryBuilder('process');
 
     const filters = Object.fromEntries(
-      Object.entries(filter).filter((actualFilter) => actualFilter[1]),
+      Object.entries(filter).filter((actualFilter) => actualFilter[1] !== null),
     );
 
     queryBuilder.where(filters);

@@ -33,7 +33,7 @@ container.registerSingleton<IProcessStagesRepository>(
 );
 
 container.registerSingleton<IProcessRepository>(
-  'ProcessRepository',
+  'ProcessesRepository',
   ProcessesRepository,
 );
 

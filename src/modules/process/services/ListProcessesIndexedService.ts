@@ -35,7 +35,7 @@ interface IResponse {
 @injectable()
 class ListProcessesIndexedService {
   constructor(
-    @inject('ProcessRepository')
+    @inject('ProcessesRepository')
     private processRepository: IProcessRepository,
   ) {}
 

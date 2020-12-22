@@ -7,7 +7,7 @@ import Process from '@modules/process/infra/typeorm/entities/Process';
 @injectable()
 class ListProcessesService {
   constructor(
-    @inject('ProcessRepository')
+    @inject('ProcessesRepository')
     private processRepository: IProcessRepository,
   ) {}
 

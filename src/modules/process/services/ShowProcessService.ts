@@ -13,7 +13,7 @@ interface IRequest {
 @injectable()
 class ShowProcessService {
   constructor(
-    @inject('ProcessRepository')
+    @inject('ProcessesRepository')
     private processRepository: IProcessRepository,
   ) {}
 

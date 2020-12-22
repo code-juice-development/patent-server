@@ -7,14 +7,14 @@ let fakeProcessRepository: FakeProcessesRepository;
 let createProcessService: CreateProcessService;
 let deleteProcessService: DeleteProcessService;
 
-describe('Create Process Service', () => {
+describe('Delete Process Service', () => {
   beforeEach(() => {
     fakeProcessRepository = new FakeProcessesRepository();
     createProcessService = new CreateProcessService(fakeProcessRepository);
     deleteProcessService = new DeleteProcessService(fakeProcessRepository);
   });
 
-  it('should be able to create a new Process', async () => {
+  it('should be able to delete Process', async () => {
     const { id } = await createProcessService.execute({
       number: '156156',
       brand: 'JJ Multimarcas',

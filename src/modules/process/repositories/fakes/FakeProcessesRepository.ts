@@ -128,13 +128,15 @@ class FakeProcessesRepository implements IProcessesRepository {
     const total = this.processes.length;
 
     const filteredProcesses = this.processes.filter((process) => {
-      if (number && process.number !== number) return false;
-      if (brand && process.brand !== brand) return false;
-      if (kind && process.kind !== kind) return false;
-      if (presentation && process.presentation !== presentation) return false;
-      if (last_update && process.last_update !== last_update) return false;
-      if (birthday && process.birthday !== birthday) return false;
-      if (client_id && process.client_id !== client_id) return false;
+      if (number !== null && process.number !== number) return false;
+      if (brand !== null && process.brand !== brand) return false;
+      if (kind !== null && process.kind !== kind) return false;
+      if (presentation !== null && process.presentation !== presentation)
+        return false;
+      if (last_update !== null && process.last_update !== last_update)
+        return false;
+      if (birthday !== null && process.birthday !== birthday) return false;
+      if (client_id !== null && process.client_id !== client_id) return false;
 
       return true;
     });
