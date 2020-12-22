@@ -102,7 +102,7 @@ class ClientsRepository implements IClientsRepository {
     const queryBuilder = this.repository.createQueryBuilder('clients');
 
     const filters = Object.fromEntries(
-      Object.entries(filter).filter((actualFilter) => actualFilter[1]),
+      Object.entries(filter).filter((actualFilter) => actualFilter[1] !== null),
     );
 
     queryBuilder.where(filters);

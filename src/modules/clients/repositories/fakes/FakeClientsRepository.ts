@@ -122,11 +122,11 @@ class FakeClientsRepository implements IClientsRepository {
     const total = this.clients.length;
 
     const filteredClients = this.clients.filter((client) => {
-      if (name && client.name !== name) return false;
-      if (email && client.email !== email) return false;
-      if (phone && client.phone !== phone) return false;
-      if (cpf && client.cpf !== cpf) return false;
-      if (cnpj && client.cnpj !== cnpj) return false;
+      if (name !== null && client.name !== name) return false;
+      if (email !== null && client.email !== email) return false;
+      if (phone !== null && client.phone !== phone) return false;
+      if (cpf !== null && client.cpf !== cpf) return false;
+      if (cnpj !== null && client.cnpj !== cnpj) return false;
 
       return true;
     });
