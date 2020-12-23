@@ -65,6 +65,21 @@ class FakeProcessStatusStagesRepository implements IProcessesRepository {
     return processStatusStage ?? new ProcessStatusStage();
   }
 
+  public async updatePending(
+    id: string,
+    resolved_pending: boolean,
+  ): Promise<ProcessStatusStage> {
+    const processStatusStage = this.processStatusStages.find(
+      (actualProcessStatusStage) => actualProcessStatusStage.id === id,
+    );
+
+    Object.assign(processStatusStage, {
+      resolved_pending,
+    });
+
+    return processStatusStage ?? new ProcessStatusStage();
+  }
+
   public async delete(id: string): Promise<void> {
     this.processStatusStages = this.processStatusStages.filter(
       (actualProcessStatusStage) => actualProcessStatusStage.id !== id,

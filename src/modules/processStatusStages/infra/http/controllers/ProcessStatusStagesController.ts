@@ -1,10 +1,29 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
+import UpdateProcessStatusStagePendingService from '@modules/processStatusStages/services/UpdateProcessStatusStagePendingService';
 import ListProcessStatusStagesIndexedService from '@modules/processStatusStages/services/ListProcessStatusStagesIndexedService';
 import ShowProcessStatusStageService from '@modules/processStatusStages/services/ShowProcessStatusStageService';
 
 class ProcessesController {
+  public async update(request: Request, response: Response): Promise<Response> {
+    const { id } = request.params;
+    const { resolved_pending } = request.body;
+
+    const updateProcessStatusStagePendingService = container.resolve(
+      UpdateProcessStatusStagePendingService,
+    );
+
+    const processStatusStage = await updateProcessStatusStagePendingService.execute(
+      {
+        id,
+        resolved_pending,
+      },
+    );
+
+    return response.json(processStatusStage);
+  }
+
   public async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 

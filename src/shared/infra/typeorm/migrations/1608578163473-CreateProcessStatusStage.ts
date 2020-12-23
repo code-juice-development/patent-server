@@ -29,7 +29,7 @@ export class CreateProcessStatusStage1608578163473
           },
           {
             name: 'resolved_pending',
-            type: 'varchar',
+            type: 'boolean',
           },
           {
             name: 'process_id',

@@ -32,6 +32,11 @@ interface IProcessStatusStagesRepository {
 
   update(data: IUpdateProcessStatusStagesDTO): Promise<ProcessStatusStage>;
 
+  updatePending(
+    id: string,
+    resolved_pending: boolean,
+  ): Promise<ProcessStatusStage>;
+
   delete(id: string): Promise<void>;
 
   findAll(): Promise<ProcessStatusStage[]>;

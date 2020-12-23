@@ -59,6 +59,20 @@ class ProcessStatusStagesRepository implements IProcessesRepository {
     return processStatusStage;
   }
 
+  public async updatePending(
+    id: string,
+    resolved_pending: boolean,
+  ): Promise<ProcessStatusStage> {
+    const processStatusStage = this.repository.create({
+      id,
+      resolved_pending,
+    });
+
+    await this.repository.save(processStatusStage);
+
+    return processStatusStage;
+  }
+
   public async delete(id: string): Promise<void> {
     await this.repository.delete(id);
   }
