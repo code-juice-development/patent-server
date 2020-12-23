@@ -42,11 +42,11 @@ class Process {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'client_id', referencedColumnName: 'id' })
-  clients: Client;
+  client: Client;
 
   @OneToMany(
     (_type) => ProcessStatusStage,
-    (processStatusStage) => processStatusStage.processes,
+    (processStatusStage) => processStatusStage.process,
   )
   process_status_stages: ProcessStatusStage[];
 

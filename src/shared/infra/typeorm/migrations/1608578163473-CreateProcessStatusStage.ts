@@ -33,11 +33,11 @@ export class CreateProcessStatusStage1608578163473
           },
           {
             name: 'process_id',
-            type: 'varchar',
+            type: 'uuid',
           },
           {
             name: 'process_stage_id',
-            type: 'varchar',
+            type: 'uuid',
           },
           {
             name: 'created_at',

@@ -29,7 +29,7 @@ class Client {
   @Column({ nullable: true })
   cnpj: string;
 
-  @OneToMany((_type) => Process, (process) => process.clients)
+  @OneToMany((_type) => Process, (process) => process.client)
   process: Process[];
 
   @CreateDateColumn()

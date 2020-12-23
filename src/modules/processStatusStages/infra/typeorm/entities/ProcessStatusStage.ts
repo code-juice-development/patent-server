@@ -32,7 +32,7 @@ class ProcessStatusStage {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'process_id', referencedColumnName: 'id' })
-  processes: Process;
+  process: Process;
 
   @Column()
   process_stage_id: string;
@@ -45,7 +45,7 @@ class ProcessStatusStage {
     },
   )
   @JoinColumn({ name: 'process_stage_id', referencedColumnName: 'id' })
-  processStages: ProcessStage;
+  processStage: ProcessStage;
 
   @CreateDateColumn()
   created_at: string;
