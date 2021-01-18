@@ -115,7 +115,12 @@ CreateProcessUpdateJob.process(async (job, done) => {
             process_stage_id,
           });
 
-          await processesRepository.update({ ...process, last_update: data });
+          const [day, month, year] = data.split('/');
+          const last_update = new Date(
+            `${month}-${day}-${year}`,
+          ).toDateString();
+
+          await processesRepository.update({ ...process, last_update });
         }
       }
     }
