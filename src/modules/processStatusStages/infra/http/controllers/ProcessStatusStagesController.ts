@@ -5,7 +5,7 @@ import UpdateProcessStatusStagePendingService from '@modules/processStatusStages
 import ListProcessStatusStagesIndexedService from '@modules/processStatusStages/services/ListProcessStatusStagesIndexedService';
 import ShowProcessStatusStageService from '@modules/processStatusStages/services/ShowProcessStatusStageService';
 
-class ProcessesController {
+class ProcessStatusStagesController {
   public async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
     const { resolved_pending } = request.body;
@@ -56,9 +56,9 @@ class ProcessesController {
     const page_verified = Number(page ?? 0);
     const rows_verified = Number(rows ?? 10);
     const ordenation_verified = String(ordenation ?? 'has_pending');
-    const has_pending_verified = has_pending ? Boolean(has_pending) : null;
+    const has_pending_verified = has_pending ? has_pending === 'true' : null;
     const resolved_pending_verified = resolved_pending
-      ? Boolean(resolved_pending)
+      ? resolved_pending === 'true'
       : null;
     const process_id_verified = process_id ? String(process_id) : null;
     const process_stage_id_verified = process_stage_id
@@ -85,4 +85,4 @@ class ProcessesController {
   }
 }
 
-export default ProcessesController;
+export default ProcessStatusStagesController;

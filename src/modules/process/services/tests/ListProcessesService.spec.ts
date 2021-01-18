@@ -1,17 +1,27 @@
 import FakeProcessesRepository from '@modules/process/repositories/fakes/FakeProcessesRepository';
+import FakeProcessStagesRepository from '@modules/processStages/repositories/fakes/FakeProcessStagesRepository';
+import FakeProcessStatusStagesRepository from '@modules/processStatusStages/repositories/fakes/FakeProcessStatusStagesRepository';
 
 import CreateProcessService from '@modules/process/services/CreateProcessService';
 import ListProcessesService from '@modules/process/services/ListProcessesService';
 
-let fakeProcessRepository: FakeProcessesRepository;
+let fakeProcessesRepository: FakeProcessesRepository;
+let fakeProcessesStagesRepository: FakeProcessStagesRepository;
+let fakeProcessesStatusStagesRepository: FakeProcessStatusStagesRepository;
 let createProcessService: CreateProcessService;
 let listProcessesService: ListProcessesService;
 
 describe('List Processes Service', () => {
   beforeEach(() => {
-    fakeProcessRepository = new FakeProcessesRepository();
-    createProcessService = new CreateProcessService(fakeProcessRepository);
-    listProcessesService = new ListProcessesService(fakeProcessRepository);
+    fakeProcessesRepository = new FakeProcessesRepository();
+    fakeProcessesStagesRepository = new FakeProcessStagesRepository();
+    fakeProcessesStatusStagesRepository = new FakeProcessStatusStagesRepository();
+    createProcessService = new CreateProcessService(
+      fakeProcessesRepository,
+      fakeProcessesStagesRepository,
+      fakeProcessesStatusStagesRepository,
+    );
+    listProcessesService = new ListProcessesService(fakeProcessesRepository);
   });
 
   it('should be able to list all Process', async () => {
@@ -23,6 +33,7 @@ describe('List Processes Service', () => {
       last_update: '01/01/2021',
       birthday: '01/01/2021',
       client_id: '95342393000128',
+      process_stage_id: '',
     });
 
     const processGGGames = await createProcessService.execute({
@@ -33,6 +44,7 @@ describe('List Processes Service', () => {
       last_update: '15/01/2021',
       birthday: '15/01/2021',
       client_id: '6655',
+      process_stage_id: '',
     });
 
     const processesFinded = await listProcessesService.execute();

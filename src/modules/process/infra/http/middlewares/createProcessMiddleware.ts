@@ -9,6 +9,7 @@ const createProcessMiddleware = celebrate({
     last_update: Joi.string().isoDate().required(),
     birthday: Joi.string().isoDate().required(),
     client_id: Joi.string().uuid().required(),
+    process_stage_id: Joi.string().uuid(),
   }),
 });
 

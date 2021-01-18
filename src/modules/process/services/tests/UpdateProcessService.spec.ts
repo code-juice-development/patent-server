@@ -1,19 +1,29 @@
 import AppError from '@shared/errors/AppError';
 
 import FakeProcessesRepository from '@modules/process/repositories/fakes/FakeProcessesRepository';
+import FakeProcessStagesRepository from '@modules/processStages/repositories/fakes/FakeProcessStagesRepository';
+import FakeProcessStatusStagesRepository from '@modules/processStatusStages/repositories/fakes/FakeProcessStatusStagesRepository';
 
 import CreateProcessService from '@modules/process/services/CreateProcessService';
 import UpdateProcessService from '@modules/process/services/UpdateProcessService';
 
-let fakeProcessRepository: FakeProcessesRepository;
+let fakeProcessesRepository: FakeProcessesRepository;
+let fakeProcessesStagesRepository: FakeProcessStagesRepository;
+let fakeProcessesStatusStagesRepository: FakeProcessStatusStagesRepository;
 let createProcessService: CreateProcessService;
 let updateProcessService: UpdateProcessService;
 
 describe('Update Process Service', () => {
   beforeEach(() => {
-    fakeProcessRepository = new FakeProcessesRepository();
-    createProcessService = new CreateProcessService(fakeProcessRepository);
-    updateProcessService = new UpdateProcessService(fakeProcessRepository);
+    fakeProcessesRepository = new FakeProcessesRepository();
+    fakeProcessesStagesRepository = new FakeProcessStagesRepository();
+    fakeProcessesStatusStagesRepository = new FakeProcessStatusStagesRepository();
+    createProcessService = new CreateProcessService(
+      fakeProcessesRepository,
+      fakeProcessesStagesRepository,
+      fakeProcessesStatusStagesRepository,
+    );
+    updateProcessService = new UpdateProcessService(fakeProcessesRepository);
   });
 
   it('should be able to update a Process', async () => {
@@ -25,6 +35,7 @@ describe('Update Process Service', () => {
       last_update: '01/01/2021',
       birthday: '01/01/2021',
       client_id: '95342393000128',
+      process_stage_id: '',
     });
 
     await updateProcessService.execute({
@@ -38,7 +49,7 @@ describe('Update Process Service', () => {
       client_id: '6655',
     });
 
-    const process = await fakeProcessRepository.findById(id);
+    const process = await fakeProcessesRepository.findById(id);
 
     expect(process?.brand).toBe('GG Games');
     expect(process?.kind).toBe('Patentes');
@@ -57,6 +68,7 @@ describe('Update Process Service', () => {
       last_update: '01/01/2021',
       birthday: '01/01/2021',
       client_id: '95342393000128',
+      process_stage_id: '',
     });
 
     const { id } = await createProcessService.execute({
@@ -67,6 +79,7 @@ describe('Update Process Service', () => {
       last_update: '15/01/2021',
       birthday: '15/01/2021',
       client_id: '6655',
+      process_stage_id: '',
     });
 
     expect(
@@ -92,6 +105,7 @@ describe('Update Process Service', () => {
       last_update: '01/01/2021',
       birthday: '01/01/2021',
       client_id: '95342393000128',
+      process_stage_id: '',
     });
 
     const { id } = await createProcessService.execute({
@@ -102,6 +116,7 @@ describe('Update Process Service', () => {
       last_update: '15/01/2021',
       birthday: '15/01/2021',
       client_id: '6655',
+      process_stage_id: '',
     });
 
     expect(

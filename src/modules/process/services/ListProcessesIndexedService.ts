@@ -24,6 +24,8 @@ interface IRequest {
   birthday: string | null;
 
   client_id: string | null;
+
+  pendent: boolean | null;
 }
 
 interface IResponse {
@@ -50,6 +52,7 @@ class ListProcessesIndexedService {
     last_update,
     birthday,
     client_id,
+    pendent,
   }: IRequest): Promise<IResponse> {
     const { total, processes } = await this.processRepository.findIndexed({
       page,
@@ -63,6 +66,7 @@ class ListProcessesIndexedService {
         last_update,
         birthday,
         client_id,
+        pendent,
       },
     });
 

@@ -17,6 +17,7 @@ class ProcessesController {
       last_update,
       birthday,
       client_id,
+      process_stage_id,
     } = request.body;
 
     const createProcessService = container.resolve(CreateProcessService);
@@ -29,6 +30,7 @@ class ProcessesController {
       last_update,
       birthday,
       client_id,
+      process_stage_id,
     });
 
     return response.status(201).json(process);
@@ -94,6 +96,7 @@ class ProcessesController {
       last_update,
       birthday,
       client_id,
+      pendent,
     } = request.query;
 
     const listProcessesIndexedService = container.resolve(
@@ -102,7 +105,7 @@ class ProcessesController {
 
     const page_verified = Number(page ?? 0);
     const rows_verified = Number(rows ?? 10);
-    const ordenation_verified = String(ordenation ?? 'name');
+    const ordenation_verified = String(ordenation ?? 'number');
     const number_verified = number ? String(number) : null;
     const brand_verified = brand ? String(brand) : null;
     const kind_verified = kind ? String(kind) : null;
@@ -110,6 +113,7 @@ class ProcessesController {
     const last_update_verified = last_update ? String(last_update) : null;
     const birthday_verified = birthday ? String(birthday) : null;
     const client_id_verified = client_id ? String(client_id) : null;
+    const pendent_verified = pendent ? pendent === 'true' : null;
 
     const { total, processes } = await listProcessesIndexedService.execute({
       page: page_verified,
@@ -122,6 +126,7 @@ class ProcessesController {
       last_update: last_update_verified,
       birthday: birthday_verified,
       client_id: client_id_verified,
+      pendent: pendent_verified,
     });
 
     response.header('Access-Control-Expose-Headers', 'X-Total-Count');

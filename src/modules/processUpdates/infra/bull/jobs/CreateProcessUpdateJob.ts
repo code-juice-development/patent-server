@@ -9,6 +9,7 @@ import { container } from 'tsyringe';
 
 import IProcessesRepository from '@modules/process/repositories/IProcessesRepository';
 import IProcessStagesRepository from '@modules/processStages/repositories/IProcessStagesRepository';
+import IProcessStatusStagesRepository from '@modules/processStatusStages/repositories/IProcessStatusStagesRepository';
 
 import CreateProcessStatusStageService from '@modules/processStatusStages/services/CreateProcessStatusStageService';
 
@@ -54,6 +55,10 @@ CreateProcessUpdateJob.process(async (job, done) => {
     'ProcessStagesRepository',
   );
 
+  const processStatusStagesRepository = container.resolve<IProcessStatusStagesRepository>(
+    'ProcessStatusStagesRepository',
+  );
+
   const createProcessStatusStageService = container.resolve(
     CreateProcessStatusStageService,
   );
@@ -78,6 +83,21 @@ CreateProcessUpdateJob.process(async (job, done) => {
         const processStage = await processStagesRepository.findByCode(codigo);
 
         if (processStage) {
+          /** On insert a new Process Stage, the old Stages are setted to resolved */
+          const processStages = await processStatusStagesRepository.findByProcessId(
+            process.id,
+          );
+
+          for await (const processStagePrevious of processStages) {
+            if (processStagePrevious.has_pending) {
+              await processStatusStagesRepository.updatePending(
+                processStagePrevious.id,
+                true,
+              );
+            }
+          }
+
+          /** Insert a new Process Stage */
           const has_pending = !!processStage.deadline;
           const resolved_pending = false;
           const process_id = process.id;
@@ -94,6 +114,8 @@ CreateProcessUpdateJob.process(async (job, done) => {
             process_id,
             process_stage_id,
           });
+
+          await processesRepository.update({ ...process, last_update: data });
         }
       }
     }

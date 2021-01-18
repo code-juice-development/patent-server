@@ -1,16 +1,26 @@
 import FakeProcessesRepository from '@modules/process/repositories/fakes/FakeProcessesRepository';
+import FakeProcessStagesRepository from '@modules/processStages/repositories/fakes/FakeProcessStagesRepository';
+import FakeProcessStatusStagesRepository from '@modules/processStatusStages/repositories/fakes/FakeProcessStatusStagesRepository';
 
 import CreateProcessService from '@modules/process/services/CreateProcessService';
 import ListProcessesIndexedService from '@modules/process/services/ListProcessesIndexedService';
 
 let fakeProcessesRepository: FakeProcessesRepository;
+let fakeProcessesStagesRepository: FakeProcessStagesRepository;
+let fakeProcessesStatusStagesRepository: FakeProcessStatusStagesRepository;
 let createProcessService: CreateProcessService;
 let listProcessesIndexedService: ListProcessesIndexedService;
 
 describe('List Processes Indexed Service', () => {
   beforeEach(() => {
     fakeProcessesRepository = new FakeProcessesRepository();
-    createProcessService = new CreateProcessService(fakeProcessesRepository);
+    fakeProcessesStagesRepository = new FakeProcessStagesRepository();
+    fakeProcessesStatusStagesRepository = new FakeProcessStatusStagesRepository();
+    createProcessService = new CreateProcessService(
+      fakeProcessesRepository,
+      fakeProcessesStagesRepository,
+      fakeProcessesStatusStagesRepository,
+    );
     listProcessesIndexedService = new ListProcessesIndexedService(
       fakeProcessesRepository,
     );
@@ -25,6 +35,7 @@ describe('List Processes Indexed Service', () => {
       last_update: '01/01/2021',
       birthday: '01/01/2021',
       client_id: '95342393000128',
+      process_stage_id: '',
     });
 
     const clientGGGames = await createProcessService.execute({
@@ -35,6 +46,7 @@ describe('List Processes Indexed Service', () => {
       last_update: '15/01/2021',
       birthday: '15/01/2021',
       client_id: '6655',
+      process_stage_id: '',
     });
 
     const responseClientsJJMultimarcas = await listProcessesIndexedService.execute(
@@ -49,6 +61,7 @@ describe('List Processes Indexed Service', () => {
         last_update: null,
         birthday: null,
         client_id: null,
+        pendent: null,
       },
     );
 
@@ -63,6 +76,7 @@ describe('List Processes Indexed Service', () => {
       last_update: null,
       birthday: null,
       client_id: null,
+      pendent: null,
     });
 
     // Count

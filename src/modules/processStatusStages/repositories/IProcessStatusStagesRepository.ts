@@ -43,7 +43,17 @@ interface IProcessStatusStagesRepository {
 
   findById(id: string): Promise<ProcessStatusStage | undefined>;
 
+  findByProcessId(process_id: string): Promise<ProcessStatusStage[]>;
+
+  findByProcessStageId(process_stage_id: string): Promise<ProcessStatusStage[]>;
+
   findIndexed(data: IDataFindIndexed): Promise<IResultFindIndexed>;
+
+  findProcessStagePendentActualTotal(process_stage_id: string): Promise<number>;
+
+  findProcessStageResolvedActualTotal(
+    process_stage_id: string,
+  ): Promise<number>;
 }
 
 export default IProcessStatusStagesRepository;

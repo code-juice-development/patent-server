@@ -98,6 +98,28 @@ class FakeProcessStatusStagesRepository implements IProcessesRepository {
     return processStatusStage;
   }
 
+  public async findByProcessId(
+    process_id: string,
+  ): Promise<ProcessStatusStage[]> {
+    const processStatusStages = this.processStatusStages.filter(
+      (actualProcessStatusStage) =>
+        actualProcessStatusStage.process_id === process_id,
+    );
+
+    return processStatusStages;
+  }
+
+  public async findByProcessStageId(
+    process_stage_id: string,
+  ): Promise<ProcessStatusStage[]> {
+    const processStatusStages = this.processStatusStages.filter(
+      (actualProcessStatusStage) =>
+        actualProcessStatusStage.process_stage_id === process_stage_id,
+    );
+
+    return processStatusStages;
+  }
+
   /**
    * @todo Include ordering
    */
@@ -145,6 +167,18 @@ class FakeProcessStatusStagesRepository implements IProcessesRepository {
     );
 
     return { total, process_status_stages };
+  }
+
+  findProcessStagePendentActualTotal(
+    process_stage_id: string,
+  ): Promise<number> {
+    throw new Error('Method not implemented.');
+  }
+
+  findProcessStageResolvedActualTotal(
+    process_stage_id: string,
+  ): Promise<number> {
+    throw new Error('Method not implemented.');
   }
 }
 

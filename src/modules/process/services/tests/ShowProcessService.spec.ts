@@ -1,19 +1,29 @@
 import FakeProcessesRepository from '@modules/process/repositories/fakes/FakeProcessesRepository';
+import FakeProcessStagesRepository from '@modules/processStages/repositories/fakes/FakeProcessStagesRepository';
+import FakeProcessStatusStagesRepository from '@modules/processStatusStages/repositories/fakes/FakeProcessStatusStagesRepository';
 
 import AppError from '@shared/errors/AppError';
 
 import CreateProcessService from '@modules/process/services/CreateProcessService';
 import ShowProcessService from '@modules/process/services/ShowProcessService';
 
-let fakeProcessRepository: FakeProcessesRepository;
+let fakeProcessesRepository: FakeProcessesRepository;
+let fakeProcessesStagesRepository: FakeProcessStagesRepository;
+let fakeProcessesStatusStagesRepository: FakeProcessStatusStagesRepository;
 let createProcessService: CreateProcessService;
 let showProcessService: ShowProcessService;
 
 describe('Show Process Service', () => {
   beforeEach(() => {
-    fakeProcessRepository = new FakeProcessesRepository();
-    createProcessService = new CreateProcessService(fakeProcessRepository);
-    showProcessService = new ShowProcessService(fakeProcessRepository);
+    fakeProcessesRepository = new FakeProcessesRepository();
+    fakeProcessesStagesRepository = new FakeProcessStagesRepository();
+    fakeProcessesStatusStagesRepository = new FakeProcessStatusStagesRepository();
+    createProcessService = new CreateProcessService(
+      fakeProcessesRepository,
+      fakeProcessesStagesRepository,
+      fakeProcessesStatusStagesRepository,
+    );
+    showProcessService = new ShowProcessService(fakeProcessesRepository);
   });
 
   it('should be able to show a Process', async () => {
@@ -25,6 +35,7 @@ describe('Show Process Service', () => {
       last_update: '01/01/2021',
       birthday: '01/01/2021',
       client_id: '95342393000128',
+      process_stage_id: '',
     });
 
     const { id } = process;

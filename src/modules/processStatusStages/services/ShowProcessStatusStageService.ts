@@ -13,12 +13,12 @@ interface IRequest {
 @injectable()
 class ShowProcessStatusStageService {
   constructor(
-    @inject('ProcessStatusStageRepository')
-    private ProcessStatusStageRepository: IProcessStatusStagesRepository,
+    @inject('ProcessStatusStagesRepository')
+    private ProcessStatusStagesRepository: IProcessStatusStagesRepository,
   ) {}
 
   public async execute({ id }: IRequest): Promise<ProcessStatusStage> {
-    const processStatusStage = await this.ProcessStatusStageRepository.findById(
+    const processStatusStage = await this.ProcessStatusStagesRepository.findById(
       id,
     );
 

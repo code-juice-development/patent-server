@@ -12,6 +12,7 @@ const indexProcessesMiddleware = celebrate({
     last_update: Joi.string().isoDate(),
     birthday: Joi.string().isoDate(),
     client_id: Joi.string().uuid(),
+    pendent: Joi.boolean(),
   }),
 });
 

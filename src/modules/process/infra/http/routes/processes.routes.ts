@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import ProcessesController from '@modules/process/infra/http/controllers/ProcessesController';
+import ProcessesBirthdaysController from '@modules/process/infra/http/controllers/ProcessesBirthdaysController';
 
 import createProcessMiddleware from '@modules/process/infra/http/middlewares/createProcessMiddleware';
 import updateProcessMiddleware from '@modules/process/infra/http/middlewares/updateProcessMiddleware';
@@ -13,8 +14,11 @@ import isUserLoggedIn from '@modules/users/infra/http/middlewares/isUserLoggedIn
 const processesRouter = Router();
 
 const processesController = new ProcessesController();
+const processesBirthdaysController = new ProcessesBirthdaysController();
 
 processesRouter.use(isUserLoggedIn);
+
+processesRouter.get('/birthdays', processesBirthdaysController.index);
 
 processesRouter.post('/', createProcessMiddleware, processesController.create);
 processesRouter.put(

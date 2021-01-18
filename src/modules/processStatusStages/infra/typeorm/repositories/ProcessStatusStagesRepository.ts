@@ -1,4 +1,4 @@
-import { Repository, getRepository } from 'typeorm';
+import { Repository, getRepository, Brackets } from 'typeorm';
 
 import IProcessesRepository, {
   IDataFindIndexed,
@@ -84,9 +84,36 @@ class ProcessStatusStagesRepository implements IProcessesRepository {
   }
 
   public async findById(id: string): Promise<ProcessStatusStage | undefined> {
-    const processStatusStage = this.repository.findOne({ id });
+    const processStatusStage = this.repository.findOne(
+      { id },
+      {
+        relations: ['processStage'],
+      },
+    );
 
     return processStatusStage;
+  }
+
+  public async findByProcessId(
+    process_id: string,
+  ): Promise<ProcessStatusStage[]> {
+    const processStatusStages = this.repository.find({
+      where: { process_id },
+      relations: ['processStage'],
+    });
+
+    return processStatusStages;
+  }
+
+  public async findByProcessStageId(
+    process_stage_id: string,
+  ): Promise<ProcessStatusStage[]> {
+    const processStatusStages = this.repository.find({
+      where: { process_stage_id },
+      relations: ['processStage'],
+    });
+
+    return processStatusStages;
   }
 
   public async findIndexed({
@@ -99,6 +126,11 @@ class ProcessStatusStagesRepository implements IProcessesRepository {
       'process_status_stage',
     );
 
+    queryBuilder.innerJoinAndSelect(
+      'process_status_stage.processStage',
+      'processStages',
+    );
+
     const filters = Object.fromEntries(
       Object.entries(filter).filter((actualFilter) => actualFilter[1] !== null),
     );
@@ -106,11 +138,87 @@ class ProcessStatusStagesRepository implements IProcessesRepository {
     queryBuilder.where(filters);
     queryBuilder.skip(page * rows);
     queryBuilder.take(rows);
-    queryBuilder.orderBy(ordenation);
+    queryBuilder.orderBy(`process_status_stage.${ordenation}`);
 
     const [process_status_stages, total] = await queryBuilder.getManyAndCount();
 
     return { total, process_status_stages };
+  }
+
+  public async findProcessStagePendentActualTotal(
+    process_stage_id: string,
+  ): Promise<number> {
+    const queryBuilder = this.repository.createQueryBuilder(
+      'process_status_stage',
+    );
+
+    queryBuilder
+      .where((qb) => {
+        const subQuery = qb
+          .subQuery()
+          .select('process_status_stage.id')
+          .from(ProcessStatusStage, 'process_status_stage')
+          .where('process_status_stage.process_stage_id = :process_stage_id')
+          .orderBy(
+            'process_status_stage.process_id, process_status_stage.created_at',
+            'DESC',
+          )
+          .distinctOn(['process_status_stage.process_id'])
+          .getQuery();
+
+        return `process_status_stage.id IN (${subQuery})`;
+      })
+      .andWhere(
+        new Brackets((we) => {
+          we.where('has_pending = true').andWhere('resolved_pending = false');
+        }),
+      )
+      .setParameter('process_stage_id', process_stage_id);
+
+    const amount = (await queryBuilder.getMany()).length;
+
+    return amount;
+  }
+
+  public async findProcessStageResolvedActualTotal(
+    process_stage_id: string,
+  ): Promise<number> {
+    const queryBuilder = this.repository.createQueryBuilder(
+      'process_status_stage',
+    );
+
+    queryBuilder
+      .where((qb) => {
+        const subQuery = qb
+          .subQuery()
+          .select('process_status_stage.id')
+          .from(ProcessStatusStage, 'process_status_stage')
+          .where('process_status_stage.process_stage_id = :process_stage_id')
+          .orderBy(
+            'process_status_stage.process_id, process_status_stage.created_at',
+            'DESC',
+          )
+          .distinctOn(['process_status_stage.process_id'])
+          .getQuery();
+
+        return `process_status_stage.id IN (${subQuery})`;
+      })
+      .andWhere(
+        new Brackets((we) => {
+          we.where('has_pending = false').orWhere(
+            new Brackets((we2) => {
+              we2
+                .where('has_pending = true')
+                .andWhere('resolved_pending = true');
+            }),
+          );
+        }),
+      )
+      .setParameter('process_stage_id', process_stage_id);
+
+    const amount = (await queryBuilder.getMany()).length;
+
+    return amount;
   }
 }
 

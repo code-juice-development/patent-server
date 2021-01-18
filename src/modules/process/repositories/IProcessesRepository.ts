@@ -24,6 +24,8 @@ export interface IDataFindIndexed {
     birthday: string | null;
 
     client_id: string | null;
+
+    pendent: boolean | null;
   };
 }
 
@@ -41,6 +43,8 @@ interface IProcessRepository {
   delete(id: string): Promise<void>;
 
   findAll(): Promise<Process[]>;
+
+  findAllBirthdays(): Promise<Process[]>;
 
   findById(id: string): Promise<Process | undefined>;
 

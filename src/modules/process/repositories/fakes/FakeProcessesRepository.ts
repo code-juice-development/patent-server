@@ -145,6 +145,10 @@ class FakeProcessesRepository implements IProcessesRepository {
 
     return { total, processes };
   }
+
+  findAllBirthdays(): Promise<Process[]> {
+    throw new Error('Method not implemented.');
+  }
 }
 
 export default FakeProcessesRepository;
