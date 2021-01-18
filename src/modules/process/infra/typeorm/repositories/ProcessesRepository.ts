@@ -89,7 +89,7 @@ class ProcessesRepository implements IProcessRepository {
         "extract('month' from cast(process.birthday as date)) = extract('month' from (select CURRENT_DATE))",
       )
       .andWhere(
-        "extract('year' from cast(process.birthday as date)) != extract('year' from (select CURRENT_DATE))",
+        "extract('year' from cast(process.birthday as date)) < extract('year' from (select CURRENT_DATE))",
       );
 
     const processes = queryBuilder.getMany();
