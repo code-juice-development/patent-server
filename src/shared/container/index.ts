@@ -8,8 +8,8 @@ import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepo
 import IClientsRepository from '@modules/clients/repositories/IClientsRepository';
 import ClientsRepository from '@modules/clients/infra/typeorm/repositories/ClientsRepository';
 
-import IProcessStagesRepository from '@modules/processStages/repositories/IProcessStagesRepository';
-import ProcessStagesRepository from '@modules/processStages/infra/typeorm/repositories/ProcessStagesRepository';
+import IDispatchsRepository from '@modules/dispatchs/repositories/IDispatchsRepository';
+import DispatchsRepository from '@modules/dispatchs/infra/typeorm/repositories/DispatchsRepository';
 
 import IProcessRepository from '@modules/process/repositories/IProcessesRepository';
 import ProcessesRepository from '@modules/process/infra/typeorm/repositories/ProcessesRepository';
@@ -27,9 +27,9 @@ container.registerSingleton<IClientsRepository>(
   ClientsRepository,
 );
 
-container.registerSingleton<IProcessStagesRepository>(
-  'ProcessStagesRepository',
-  ProcessStagesRepository,
+container.registerSingleton<IDispatchsRepository>(
+  'DispatchsRepository',
+  DispatchsRepository,
 );
 
 container.registerSingleton<IProcessRepository>(

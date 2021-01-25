@@ -17,7 +17,7 @@ interface IRequest {
 
   process_id: string | null;
 
-  process_stage_id: string | null;
+  dispatch_id: string | null;
 }
 
 interface IResponse {
@@ -40,7 +40,7 @@ class ListProcessStatusStagesIndexedService {
     has_pending,
     resolved_pending,
     process_id,
-    process_stage_id,
+    dispatch_id,
   }: IRequest): Promise<IResponse> {
     const {
       total,
@@ -53,7 +53,7 @@ class ListProcessStatusStagesIndexedService {
         has_pending,
         resolved_pending,
         process_id,
-        process_stage_id,
+        dispatch_id,
       },
     });
 

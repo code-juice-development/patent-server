@@ -22,14 +22,14 @@ class ProcessStatusStagesRepository implements IProcessesRepository {
     status_pending,
     resolved_pending,
     process_id,
-    process_stage_id,
+    dispatch_id,
   }: ICreateProcessStatusStageDTO): Promise<ProcessStatusStage> {
     const processStatusStage = this.repository.create({
       has_pending,
       status_pending,
       resolved_pending,
       process_id,
-      process_stage_id,
+      dispatch_id,
     });
 
     await this.repository.save(processStatusStage);
@@ -43,7 +43,7 @@ class ProcessStatusStagesRepository implements IProcessesRepository {
     status_pending,
     resolved_pending,
     process_id,
-    process_stage_id,
+    dispatch_id,
   }: IUpdateProcessStatusStagesDTO): Promise<ProcessStatusStage> {
     const processStatusStage = this.repository.create({
       id,
@@ -51,7 +51,7 @@ class ProcessStatusStagesRepository implements IProcessesRepository {
       status_pending,
       resolved_pending,
       process_id,
-      process_stage_id,
+      dispatch_id,
     });
 
     await this.repository.save(processStatusStage);
@@ -87,7 +87,7 @@ class ProcessStatusStagesRepository implements IProcessesRepository {
     const processStatusStage = this.repository.findOne(
       { id },
       {
-        relations: ['processStage'],
+        relations: ['dispatch'],
       },
     );
 
@@ -99,18 +99,18 @@ class ProcessStatusStagesRepository implements IProcessesRepository {
   ): Promise<ProcessStatusStage[]> {
     const processStatusStages = this.repository.find({
       where: { process_id },
-      relations: ['processStage'],
+      relations: ['dispatch'],
     });
 
     return processStatusStages;
   }
 
-  public async findByProcessStageId(
-    process_stage_id: string,
+  public async findByDispatchId(
+    dispatch_id: string,
   ): Promise<ProcessStatusStage[]> {
     const processStatusStages = this.repository.find({
-      where: { process_stage_id },
-      relations: ['processStage'],
+      where: { dispatch_id },
+      relations: ['dispatch'],
     });
 
     return processStatusStages;
@@ -126,27 +126,26 @@ class ProcessStatusStagesRepository implements IProcessesRepository {
       'process_status_stage',
     );
 
-    queryBuilder.innerJoinAndSelect(
-      'process_status_stage.processStage',
-      'processStages',
-    );
-
     const filters = Object.fromEntries(
       Object.entries(filter).filter((actualFilter) => actualFilter[1] !== null),
     );
 
-    queryBuilder.where(filters);
-    queryBuilder.skip(page * rows);
-    queryBuilder.take(rows);
-    queryBuilder.orderBy(`process_status_stage.${ordenation}`);
+    queryBuilder
+      .innerJoinAndSelect('process_status_stage.dispatch', 'dispatchs')
+      .where(filters)
+      .orderBy(`process_status_stage.${ordenation}`);
+
+    if (rows > 0) {
+      queryBuilder.skip(page * rows).take(rows);
+    }
 
     const [process_status_stages, total] = await queryBuilder.getManyAndCount();
 
     return { total, process_status_stages };
   }
 
-  public async findProcessStagePendentActualTotal(
-    process_stage_id: string,
+  public async findDispatchPendentActualTotal(
+    dispatch_id: string,
   ): Promise<number> {
     const queryBuilder = this.repository.createQueryBuilder(
       'process_status_stage',
@@ -158,7 +157,7 @@ class ProcessStatusStagesRepository implements IProcessesRepository {
           .subQuery()
           .select('process_status_stage.id')
           .from(ProcessStatusStage, 'process_status_stage')
-          .where('process_status_stage.process_stage_id = :process_stage_id')
+          .where('process_status_stage.dispatch_id = :dispatch_id')
           .orderBy(
             'process_status_stage.process_id, process_status_stage.created_at',
             'DESC',
@@ -173,15 +172,15 @@ class ProcessStatusStagesRepository implements IProcessesRepository {
           we.where('has_pending = true').andWhere('resolved_pending = false');
         }),
       )
-      .setParameter('process_stage_id', process_stage_id);
+      .setParameter('dispatch_id', dispatch_id);
 
     const amount = (await queryBuilder.getMany()).length;
 
     return amount;
   }
 
-  public async findProcessStageResolvedActualTotal(
-    process_stage_id: string,
+  public async findDispatchResolvedActualTotal(
+    dispatch_id: string,
   ): Promise<number> {
     const queryBuilder = this.repository.createQueryBuilder(
       'process_status_stage',
@@ -193,7 +192,7 @@ class ProcessStatusStagesRepository implements IProcessesRepository {
           .subQuery()
           .select('process_status_stage.id')
           .from(ProcessStatusStage, 'process_status_stage')
-          .where('process_status_stage.process_stage_id = :process_stage_id')
+          .where('process_status_stage.dispatch_id = :dispatch_id')
           .orderBy(
             'process_status_stage.process_id, process_status_stage.created_at',
             'DESC',
@@ -214,7 +213,7 @@ class ProcessStatusStagesRepository implements IProcessesRepository {
           );
         }),
       )
-      .setParameter('process_stage_id', process_stage_id);
+      .setParameter('dispatch_id', dispatch_id);
 
     const amount = (await queryBuilder.getMany()).length;
 

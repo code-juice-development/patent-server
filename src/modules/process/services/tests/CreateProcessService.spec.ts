@@ -1,24 +1,24 @@
 import AppError from '@shared/errors/AppError';
 
 import FakeProcessesRepository from '@modules/process/repositories/fakes/FakeProcessesRepository';
-import FakeProcessStagesRepository from '@modules/processStages/repositories/fakes/FakeProcessStagesRepository';
+import FakeDispatchsRepository from '@modules/dispatchs/repositories/fakes/FakeDispatchsRepository';
 import FakeProcessStatusStagesRepository from '@modules/processStatusStages/repositories/fakes/FakeProcessStatusStagesRepository';
 
 import CreateProcessService from '@modules/process/services/CreateProcessService';
 
 let fakeProcessesRepository: FakeProcessesRepository;
-let fakeProcessesStagesRepository: FakeProcessStagesRepository;
+let fakeDispatchsRepository: FakeDispatchsRepository;
 let fakeProcessesStatusStagesRepository: FakeProcessStatusStagesRepository;
 let createProcessService: CreateProcessService;
 
 describe('Create Process Service', () => {
   beforeEach(() => {
     fakeProcessesRepository = new FakeProcessesRepository();
-    fakeProcessesStagesRepository = new FakeProcessStagesRepository();
+    fakeDispatchsRepository = new FakeDispatchsRepository();
     fakeProcessesStatusStagesRepository = new FakeProcessStatusStagesRepository();
     createProcessService = new CreateProcessService(
       fakeProcessesRepository,
-      fakeProcessesStagesRepository,
+      fakeDispatchsRepository,
       fakeProcessesStatusStagesRepository,
     );
   });
@@ -32,14 +32,14 @@ describe('Create Process Service', () => {
       last_update: '01/01/2021',
       birthday: '01/01/2021',
       client_id: '95342393000128',
-      process_stage_id: '',
+      dispatch_id: '',
     });
 
     expect(process).toHaveProperty('id');
   });
 
-  it('should be able to create a new Process with initial Stage', async () => {
-    const processStage = await fakeProcessesStagesRepository.create({
+  it('should be able to create a new Process with initial Dispatch', async () => {
+    const dispatch = await fakeDispatchsRepository.create({
       name: 'Reavaliação',
       code: 'X4568',
       description: 'Reavaliar o requerimento pendente no protocolo',
@@ -58,7 +58,7 @@ describe('Create Process Service', () => {
       last_update: '01/01/2021',
       birthday: '01/01/2021',
       client_id: '95342393000128',
-      process_stage_id: processStage.id,
+      dispatch_id: dispatch.id,
     });
 
     const processStatusStages = await fakeProcessesStatusStagesRepository.findByProcessId(
@@ -67,7 +67,7 @@ describe('Create Process Service', () => {
 
     const processStatusStage = processStatusStages.pop();
 
-    expect(processStatusStage?.process_stage_id).toEqual(processStage.id);
+    expect(processStatusStage?.dispatch_id).toEqual(dispatch.id);
   });
 
   it('should not be able to create a new Process with the same number', async () => {
@@ -79,7 +79,7 @@ describe('Create Process Service', () => {
       last_update: '01/01/2021',
       birthday: '01/01/2021',
       client_id: '95342393000128',
-      process_stage_id: '',
+      dispatch_id: '',
     });
 
     expect(
@@ -91,7 +91,7 @@ describe('Create Process Service', () => {
         last_update: '01/01/2021',
         birthday: '01/01/2021',
         client_id: '95342393000128',
-        process_stage_id: '',
+        dispatch_id: '',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -105,7 +105,7 @@ describe('Create Process Service', () => {
       last_update: '01/01/2021',
       birthday: '01/01/2021',
       client_id: '95342393000128',
-      process_stage_id: '',
+      dispatch_id: '',
     });
 
     expect(
@@ -117,7 +117,7 @@ describe('Create Process Service', () => {
         last_update: '01/01/2021',
         birthday: '01/01/2021',
         client_id: '95342393000128',
-        process_stage_id: '',
+        dispatch_id: '',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

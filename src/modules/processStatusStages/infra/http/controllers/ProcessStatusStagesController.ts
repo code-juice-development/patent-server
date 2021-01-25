@@ -46,7 +46,7 @@ class ProcessStatusStagesController {
       has_pending,
       resolved_pending,
       process_id,
-      process_stage_id,
+      dispatch_id,
     } = request.query;
 
     const listProcessesIndexedService = container.resolve(
@@ -61,9 +61,7 @@ class ProcessStatusStagesController {
       ? resolved_pending === 'true'
       : null;
     const process_id_verified = process_id ? String(process_id) : null;
-    const process_stage_id_verified = process_stage_id
-      ? String(process_stage_id)
-      : null;
+    const dispatch_id_verified = dispatch_id ? String(dispatch_id) : null;
 
     const {
       total,
@@ -75,7 +73,7 @@ class ProcessStatusStagesController {
       has_pending: has_pending_verified,
       resolved_pending: resolved_pending_verified,
       process_id: process_id_verified,
-      process_stage_id: process_stage_id_verified,
+      dispatch_id: dispatch_id_verified,
     });
 
     response.header('Access-Control-Expose-Headers', 'X-Total-Count');

@@ -17,7 +17,7 @@ export interface IDataFindIndexed {
 
     process_id: string | null;
 
-    process_stage_id: string | null;
+    dispatch_id: string | null;
   };
 }
 
@@ -45,15 +45,13 @@ interface IProcessStatusStagesRepository {
 
   findByProcessId(process_id: string): Promise<ProcessStatusStage[]>;
 
-  findByProcessStageId(process_stage_id: string): Promise<ProcessStatusStage[]>;
+  findByDispatchId(dispatch_id: string): Promise<ProcessStatusStage[]>;
 
   findIndexed(data: IDataFindIndexed): Promise<IResultFindIndexed>;
 
-  findProcessStagePendentActualTotal(process_stage_id: string): Promise<number>;
+  findDispatchPendentActualTotal(dispatch_id: string): Promise<number>;
 
-  findProcessStageResolvedActualTotal(
-    process_stage_id: string,
-  ): Promise<number>;
+  findDispatchResolvedActualTotal(dispatch_id: string): Promise<number>;
 }
 
 export default IProcessStatusStagesRepository;

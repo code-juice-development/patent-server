@@ -3,7 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 
 import IProcessRepository from '@modules/process/repositories/IProcessesRepository';
-import IProcessStagesRepository from '@modules/processStages/repositories/IProcessStagesRepository';
+import IDispatchsRepository from '@modules/dispatchs/repositories/IDispatchsRepository';
 import IProcessStatusStagesRepository from '@modules/processStatusStages/repositories/IProcessStatusStagesRepository';
 
 import Process from '@modules/process/infra/typeorm/entities/Process';
@@ -23,7 +23,7 @@ interface IRequest {
 
   client_id: string;
 
-  process_stage_id: string;
+  dispatch_id: string;
 }
 
 @injectable()
@@ -32,8 +32,8 @@ class CreateProcessService {
     @inject('ProcessesRepository')
     private processesRepository: IProcessRepository,
 
-    @inject('ProcessStagesRepository')
-    private processStagesRepository: IProcessStagesRepository,
+    @inject('DispatchsRepository')
+    private dispatchsRepository: IDispatchsRepository,
 
     @inject('ProcessStatusStagesRepository')
     private processStatusStagesRepository: IProcessStatusStagesRepository,
@@ -47,7 +47,7 @@ class CreateProcessService {
     last_update,
     birthday,
     client_id,
-    process_stage_id,
+    dispatch_id,
   }: IRequest): Promise<Process> {
     const processWithSameNumber = await this.processesRepository.findByNumber(
       number,
@@ -75,18 +75,16 @@ class CreateProcessService {
       client_id,
     });
 
-    if (process_stage_id) {
-      const processStage = await this.processStagesRepository.findById(
-        process_stage_id,
-      );
+    if (dispatch_id) {
+      const dispatch = await this.dispatchsRepository.findById(dispatch_id);
 
-      if (processStage) {
-        const has_pending = !!processStage.deadline;
+      if (dispatch) {
+        const has_pending = !!dispatch.deadline;
         const resolved_pending = false;
         const process_id = process.id;
 
         const status_pending = has_pending
-          ? `Fase do Processo possui prazo de ${processStage.deadline} dias, contanto a partir de ${process.created_at}`
+          ? `Despacho possui prazo de ${dispatch.deadline} dias, contanto a partir de ${process.created_at}`
           : '';
 
         await this.processStatusStagesRepository.create({
@@ -94,7 +92,7 @@ class CreateProcessService {
           status_pending,
           resolved_pending,
           process_id,
-          process_stage_id,
+          dispatch_id,
         });
       }
     }

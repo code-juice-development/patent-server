@@ -15,7 +15,7 @@ interface IRequest {
 
   process_id: string;
 
-  process_stage_id: string;
+  dispatch_id: string;
 }
 
 @injectable()
@@ -31,7 +31,7 @@ class UpdateProcessStatusStageService {
     status_pending,
     resolved_pending,
     process_id,
-    process_stage_id,
+    dispatch_id,
   }: IRequest): Promise<ProcessStatusStage> {
     const processStatusStage = await this.processStatusStagesRepository.update({
       id,
@@ -39,7 +39,7 @@ class UpdateProcessStatusStageService {
       status_pending,
       resolved_pending,
       process_id,
-      process_stage_id,
+      dispatch_id,
     });
 
     return processStatusStage;

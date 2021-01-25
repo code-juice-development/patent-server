@@ -17,7 +17,7 @@ class ProcessesController {
       last_update,
       birthday,
       client_id,
-      process_stage_id,
+      dispatch_id,
     } = request.body;
 
     const createProcessService = container.resolve(CreateProcessService);
@@ -30,7 +30,7 @@ class ProcessesController {
       last_update,
       birthday,
       client_id,
-      process_stage_id,
+      dispatch_id,
     });
 
     return response.status(201).json(process);

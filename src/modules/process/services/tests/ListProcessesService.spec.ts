@@ -1,12 +1,12 @@
 import FakeProcessesRepository from '@modules/process/repositories/fakes/FakeProcessesRepository';
-import FakeProcessStagesRepository from '@modules/processStages/repositories/fakes/FakeProcessStagesRepository';
+import FakeDispatchsRepository from '@modules/dispatchs/repositories/fakes/FakeDispatchsRepository';
 import FakeProcessStatusStagesRepository from '@modules/processStatusStages/repositories/fakes/FakeProcessStatusStagesRepository';
 
 import CreateProcessService from '@modules/process/services/CreateProcessService';
 import ListProcessesService from '@modules/process/services/ListProcessesService';
 
 let fakeProcessesRepository: FakeProcessesRepository;
-let fakeProcessesStagesRepository: FakeProcessStagesRepository;
+let fakeDispatchsRepository: FakeDispatchsRepository;
 let fakeProcessesStatusStagesRepository: FakeProcessStatusStagesRepository;
 let createProcessService: CreateProcessService;
 let listProcessesService: ListProcessesService;
@@ -14,11 +14,11 @@ let listProcessesService: ListProcessesService;
 describe('List Processes Service', () => {
   beforeEach(() => {
     fakeProcessesRepository = new FakeProcessesRepository();
-    fakeProcessesStagesRepository = new FakeProcessStagesRepository();
+    fakeDispatchsRepository = new FakeDispatchsRepository();
     fakeProcessesStatusStagesRepository = new FakeProcessStatusStagesRepository();
     createProcessService = new CreateProcessService(
       fakeProcessesRepository,
-      fakeProcessesStagesRepository,
+      fakeDispatchsRepository,
       fakeProcessesStatusStagesRepository,
     );
     listProcessesService = new ListProcessesService(fakeProcessesRepository);
@@ -33,7 +33,7 @@ describe('List Processes Service', () => {
       last_update: '01/01/2021',
       birthday: '01/01/2021',
       client_id: '95342393000128',
-      process_stage_id: '',
+      dispatch_id: '',
     });
 
     const processGGGames = await createProcessService.execute({
@@ -44,7 +44,7 @@ describe('List Processes Service', () => {
       last_update: '15/01/2021',
       birthday: '15/01/2021',
       client_id: '6655',
-      process_stage_id: '',
+      dispatch_id: '',
     });
 
     const processesFinded = await listProcessesService.execute();

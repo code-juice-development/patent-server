@@ -3,7 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import Jobs from '@shared/infra/bull';
 
 import IProcessStatusStagesRepository from '@modules/processStatusStages/repositories/IProcessStatusStagesRepository';
-import IProcessStagesRepository from '@modules/processStages/repositories/IProcessStagesRepository';
+import IDispatchsRepository from '@modules/dispatchs/repositories/IDispatchsRepository';
 import IProcessesRepository from '@modules/process/repositories/IProcessesRepository';
 import IClientsRepository from '@modules/clients/repositories/IClientsRepository';
 
@@ -18,7 +18,7 @@ interface IRequest {
 
   process_id: string;
 
-  process_stage_id: string;
+  dispatch_id: string;
 }
 
 @injectable()
@@ -27,8 +27,8 @@ class CreateProcessStatusStageService {
     @inject('ProcessStatusStagesRepository')
     private processStatusStagesRepository: IProcessStatusStagesRepository,
 
-    @inject('ProcessStagesRepository')
-    private processStagesRepository: IProcessStagesRepository,
+    @inject('DispatchsRepository')
+    private dispatchsRepository: IDispatchsRepository,
 
     @inject('ProcessesRepository')
     private processesRepository: IProcessesRepository,
@@ -42,28 +42,26 @@ class CreateProcessStatusStageService {
     status_pending,
     resolved_pending,
     process_id,
-    process_stage_id,
+    dispatch_id,
   }: IRequest): Promise<ProcessStatusStage> {
     const processStatusStage = await this.processStatusStagesRepository.create({
       has_pending,
       status_pending,
       resolved_pending,
       process_id,
-      process_stage_id,
+      dispatch_id,
     });
 
-    const processStage = await this.processStagesRepository.findById(
-      process_stage_id,
-    );
+    const dispatch = await this.dispatchsRepository.findById(dispatch_id);
     const process = await this.processesRepository.findById(process_id);
 
-    if (processStage && processStage.send_email && process) {
+    if (dispatch && dispatch.send_email && process) {
       const client = await this.clientsRepository.findById(process.client_id);
 
       if (client) {
         const { MailJob } = Jobs;
 
-        const { model_email } = processStage;
+        const { model_email } = dispatch;
 
         await MailJob.add({ model_email, client });
       }

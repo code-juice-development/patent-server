@@ -9,7 +9,7 @@ interface IUpdateProcessStatusStageDTO {
 
   process_id: string;
 
-  process_stage_id: string;
+  dispatch_id: string;
 }
 
 export default IUpdateProcessStatusStageDTO;

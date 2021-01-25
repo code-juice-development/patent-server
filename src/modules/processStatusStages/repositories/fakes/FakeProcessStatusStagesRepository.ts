@@ -22,7 +22,7 @@ class FakeProcessStatusStagesRepository implements IProcessesRepository {
     status_pending,
     resolved_pending,
     process_id,
-    process_stage_id,
+    dispatch_id,
   }: ICreateProcessStatusStageDTO): Promise<ProcessStatusStage> {
     const processStatusStage = new ProcessStatusStage();
 
@@ -34,7 +34,7 @@ class FakeProcessStatusStagesRepository implements IProcessesRepository {
       status_pending,
       resolved_pending,
       process_id,
-      process_stage_id,
+      dispatch_id,
     });
 
     this.processStatusStages.push(processStatusStage);
@@ -48,7 +48,7 @@ class FakeProcessStatusStagesRepository implements IProcessesRepository {
     status_pending,
     resolved_pending,
     process_id,
-    process_stage_id,
+    dispatch_id,
   }: IUpdateProcessStatusStagesDTO): Promise<ProcessStatusStage> {
     const processStatusStage = this.processStatusStages.find(
       (actualProcessStatusStage) => actualProcessStatusStage.id === id,
@@ -59,7 +59,7 @@ class FakeProcessStatusStagesRepository implements IProcessesRepository {
       status_pending,
       resolved_pending,
       process_id,
-      process_stage_id,
+      dispatch_id,
     });
 
     return processStatusStage ?? new ProcessStatusStage();
@@ -109,12 +109,12 @@ class FakeProcessStatusStagesRepository implements IProcessesRepository {
     return processStatusStages;
   }
 
-  public async findByProcessStageId(
-    process_stage_id: string,
+  public async findByDispatchId(
+    dispatch_id: string,
   ): Promise<ProcessStatusStage[]> {
     const processStatusStages = this.processStatusStages.filter(
       (actualProcessStatusStage) =>
-        actualProcessStatusStage.process_stage_id === process_stage_id,
+        actualProcessStatusStage.dispatch_id === dispatch_id,
     );
 
     return processStatusStages;
@@ -128,12 +128,7 @@ class FakeProcessStatusStagesRepository implements IProcessesRepository {
     rows,
     filter,
   }: IDataFindIndexed): Promise<IResultFindIndexed> {
-    const {
-      has_pending,
-      resolved_pending,
-      process_id,
-      process_stage_id,
-    } = filter;
+    const { has_pending, resolved_pending, process_id, dispatch_id } = filter;
 
     const total = this.processStatusStages.length;
 
@@ -152,8 +147,8 @@ class FakeProcessStatusStagesRepository implements IProcessesRepository {
         if (process_id != null && processStatusStage.process_id !== process_id)
           return false;
         if (
-          process_stage_id != null &&
-          processStatusStage.process_stage_id !== process_stage_id
+          dispatch_id != null &&
+          processStatusStage.dispatch_id !== dispatch_id
         )
           return false;
 
@@ -169,15 +164,11 @@ class FakeProcessStatusStagesRepository implements IProcessesRepository {
     return { total, process_status_stages };
   }
 
-  findProcessStagePendentActualTotal(
-    process_stage_id: string,
-  ): Promise<number> {
+  findDispatchPendentActualTotal(dispatch_id: string): Promise<number> {
     throw new Error('Method not implemented.');
   }
 
-  findProcessStageResolvedActualTotal(
-    process_stage_id: string,
-  ): Promise<number> {
+  findDispatchResolvedActualTotal(dispatch_id: string): Promise<number> {
     throw new Error('Method not implemented.');
   }
 }

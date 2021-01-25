@@ -36,7 +36,7 @@ export class CreateProcessStatusStage1608578163473
             type: 'uuid',
           },
           {
-            name: 'process_stage_id',
+            name: 'dispatch_id',
             type: 'uuid',
           },
           {
@@ -67,9 +67,9 @@ export class CreateProcessStatusStage1608578163473
     await queryRunner.createForeignKey(
       'process_status_stages',
       new TableForeignKey({
-        columnNames: ['process_stage_id'],
+        columnNames: ['dispatch_id'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'process_stages',
+        referencedTableName: 'dispatchs',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       }),

@@ -5,14 +5,14 @@ import ShowProcessStatusStagePendentTotalService from '@modules/processStatusSta
 
 class ProcessStatusStagePendentTotalController {
   public async show(request: Request, response: Response): Promise<Response> {
-    const { process_stage_id } = request.params;
+    const { dispatch_id } = request.params;
 
     const showProcessStatusStageServiceTotal = container.resolve(
       ShowProcessStatusStagePendentTotalService,
     );
 
     const amount = await showProcessStatusStageServiceTotal.execute({
-      process_stage_id,
+      dispatch_id,
     });
 
     return response.json({ amount });

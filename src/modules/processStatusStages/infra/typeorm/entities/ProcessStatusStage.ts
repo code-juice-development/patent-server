@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 
 import Process from '@modules/process/infra/typeorm/entities/Process';
-import ProcessStage from '@modules/processStages/infra/typeorm/entities/ProcessStage';
+import Dispatch from '@modules/dispatchs/infra/typeorm/entities/Dispatch';
 
 @Entity('process_status_stages')
 class ProcessStatusStage {
@@ -35,17 +35,17 @@ class ProcessStatusStage {
   process: Process;
 
   @Column()
-  process_stage_id: string;
+  dispatch_id: string;
 
   @ManyToOne(
-    (_type) => ProcessStage,
-    (processStage) => processStage.process_status_stages,
+    (_type) => Dispatch,
+    (dispatch) => dispatch.process_status_stages,
     {
       onDelete: 'CASCADE',
     },
   )
-  @JoinColumn({ name: 'process_stage_id', referencedColumnName: 'id' })
-  processStage: ProcessStage;
+  @JoinColumn({ name: 'dispatch_id', referencedColumnName: 'id' })
+  dispatch: Dispatch;
 
   @CreateDateColumn()
   created_at: string;

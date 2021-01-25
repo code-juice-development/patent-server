@@ -1,12 +1,12 @@
 import FakeProcessesRepository from '@modules/process/repositories/fakes/FakeProcessesRepository';
-import FakeProcessStagesRepository from '@modules/processStages/repositories/fakes/FakeProcessStagesRepository';
+import FakeDispatchsRepository from '@modules/dispatchs/repositories/fakes/FakeDispatchsRepository';
 import FakeProcessStatusStagesRepository from '@modules/processStatusStages/repositories/fakes/FakeProcessStatusStagesRepository';
 
 import CreateProcessService from '@modules/process/services/CreateProcessService';
 import DeleteProcessService from '@modules/process/services/DeleteProcessService';
 
 let fakeProcessesRepository: FakeProcessesRepository;
-let fakeProcessesStagesRepository: FakeProcessStagesRepository;
+let fakeDispatchsRepository: FakeDispatchsRepository;
 let fakeProcessesStatusStagesRepository: FakeProcessStatusStagesRepository;
 let createProcessService: CreateProcessService;
 let deleteProcessService: DeleteProcessService;
@@ -14,11 +14,11 @@ let deleteProcessService: DeleteProcessService;
 describe('Delete Process Service', () => {
   beforeEach(() => {
     fakeProcessesRepository = new FakeProcessesRepository();
-    fakeProcessesStagesRepository = new FakeProcessStagesRepository();
+    fakeDispatchsRepository = new FakeDispatchsRepository();
     fakeProcessesStatusStagesRepository = new FakeProcessStatusStagesRepository();
     createProcessService = new CreateProcessService(
       fakeProcessesRepository,
-      fakeProcessesStagesRepository,
+      fakeDispatchsRepository,
       fakeProcessesStatusStagesRepository,
     );
     deleteProcessService = new DeleteProcessService(fakeProcessesRepository);
@@ -33,7 +33,7 @@ describe('Delete Process Service', () => {
       last_update: '01/01/2021',
       birthday: '01/01/2021',
       client_id: '95342393000128',
-      process_stage_id: '',
+      dispatch_id: '',
     });
 
     await deleteProcessService.execute({ id });

@@ -8,7 +8,7 @@ import parser from 'xml2json';
 import { container } from 'tsyringe';
 
 import IProcessesRepository from '@modules/process/repositories/IProcessesRepository';
-import IProcessStagesRepository from '@modules/processStages/repositories/IProcessStagesRepository';
+import IDispatchsRepository from '@modules/dispatchs/repositories/IDispatchsRepository';
 import IProcessStatusStagesRepository from '@modules/processStatusStages/repositories/IProcessStatusStagesRepository';
 
 import CreateProcessStatusStageService from '@modules/processStatusStages/services/CreateProcessStatusStageService';
@@ -51,8 +51,8 @@ CreateProcessUpdateJob.process(async (job, done) => {
   const processesRepository = container.resolve<IProcessesRepository>(
     'ProcessesRepository',
   );
-  const processStagesRepository = container.resolve<IProcessStagesRepository>(
-    'ProcessStagesRepository',
+  const dispatchsRepository = container.resolve<IDispatchsRepository>(
+    'DispatchsRepository',
   );
 
   const processStatusStagesRepository = container.resolve<IProcessStatusStagesRepository>(
@@ -80,31 +80,31 @@ CreateProcessUpdateJob.process(async (job, done) => {
         const { despacho } = despachos;
         const { codigo } = despacho;
 
-        const processStage = await processStagesRepository.findByCode(codigo);
+        const dispatch = await dispatchsRepository.findByCode(codigo);
 
-        if (processStage) {
-          /** On insert a new Process Stage, the old Stages are setted to resolved */
-          const processStages = await processStatusStagesRepository.findByProcessId(
+        if (dispatch) {
+          /** On insert a new Process x Dispatch, the old Dispatchs are setted to resolved */
+          const processStatusStages = await processStatusStagesRepository.findByProcessId(
             process.id,
           );
 
-          for await (const processStagePrevious of processStages) {
-            if (processStagePrevious.has_pending) {
+          for await (const processStatusStagePrevious of processStatusStages) {
+            if (processStatusStagePrevious.has_pending) {
               await processStatusStagesRepository.updatePending(
-                processStagePrevious.id,
+                processStatusStagePrevious.id,
                 true,
               );
             }
           }
 
-          /** Insert a new Process Stage */
-          const has_pending = !!processStage.deadline;
+          /** Insert a new Process x Dispatch */
+          const has_pending = !!dispatch.deadline;
           const resolved_pending = false;
           const process_id = process.id;
-          const process_stage_id = processStage.id;
+          const dispatch_id = dispatch.id;
 
           const status_pending = has_pending
-            ? `Fase do Processo possui prazo de ${processStage.deadline} dias, contanto a partir de ${data}`
+            ? `Fase do Processo possui prazo de ${dispatch.deadline} dias, contanto a partir de ${data}`
             : '';
 
           await createProcessStatusStageService.execute({
@@ -112,7 +112,7 @@ CreateProcessUpdateJob.process(async (job, done) => {
             status_pending,
             resolved_pending,
             process_id,
-            process_stage_id,
+            dispatch_id,
           });
 
           const [day, month, year] = data.split('/');

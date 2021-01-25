@@ -8,7 +8,7 @@ const indexProcessStatusStagesMiddleware = celebrate({
     has_pending: Joi.boolean(),
     resolved_pending: Joi.boolean(),
     process_id: Joi.string().uuid(),
-    process_stage_id: Joi.string().uuid(),
+    dispatch_id: Joi.string().uuid(),
   }),
 });
 
