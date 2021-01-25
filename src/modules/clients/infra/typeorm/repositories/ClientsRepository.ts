@@ -105,10 +105,11 @@ class ClientsRepository implements IClientsRepository {
       Object.entries(filter).filter((actualFilter) => actualFilter[1] !== null),
     );
 
-    queryBuilder.where(filters);
-    queryBuilder.skip(page * rows);
-    queryBuilder.take(rows);
-    queryBuilder.orderBy(ordenation);
+    queryBuilder.where(filters).orderBy(ordenation);
+
+    if (rows > 0) {
+      queryBuilder.skip(page * rows).take(rows);
+    }
 
     const [clients, total] = await queryBuilder.getManyAndCount();
 

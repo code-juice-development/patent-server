@@ -193,12 +193,13 @@ class ProcessesRepository implements IProcessRepository {
       queryBuilder.setParameter('last_update', last_update);
     }
 
-    queryBuilder.innerJoinAndSelect('process.client', 'clients');
-
     queryBuilder
-      .skip(page * rows)
-      .take(rows)
+      .innerJoinAndSelect('process.client', 'clients')
       .orderBy(`process.${ordenation}`);
+
+    if (rows > 0) {
+      queryBuilder.skip(page * rows).take(rows);
+    }
 
     const [processes, total] = await queryBuilder.getManyAndCount();
 
