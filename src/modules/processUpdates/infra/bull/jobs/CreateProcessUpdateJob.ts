@@ -9,11 +9,11 @@ import { container } from 'tsyringe';
 
 import IProcessesRepository from '@modules/process/repositories/IProcessesRepository';
 import IDispatchsRepository from '@modules/dispatchs/repositories/IDispatchsRepository';
-import IProcessStatusStagesRepository from '@modules/processStatusStages/repositories/IProcessStatusStagesRepository';
+import IProcessDispatchsRepository from '@modules/processDispatchs/repositories/IProcessDispatchsRepository';
 
-import CreateProcessStatusStageService from '@modules/processStatusStages/services/CreateProcessStatusStageService';
+import CreateProcessDispatchService from '@modules/processDispatchs/services/CreateProcessDispatchService';
 
-interface ICreateProcessStatusStageJobData {
+interface ICreateProcessDispatchJobData {
   path: string;
 }
 
@@ -37,7 +37,7 @@ interface IXMLModel {
   };
 }
 
-const CreateProcessUpdateJob = new Bull('CreateProcessStatusStageJob', {
+const CreateProcessUpdateJob = new Bull('CreateProcessDispatchJob', {
   redis: {
     port: Number(process.env.REDIS_PORT),
     host: String(process.env.REDIS_HOST),
@@ -46,7 +46,7 @@ const CreateProcessUpdateJob = new Bull('CreateProcessStatusStageJob', {
 });
 
 CreateProcessUpdateJob.process(async (job, done) => {
-  const { path }: ICreateProcessStatusStageJobData = job.data;
+  const { path }: ICreateProcessDispatchJobData = job.data;
 
   const processesRepository = container.resolve<IProcessesRepository>(
     'ProcessesRepository',
@@ -55,12 +55,12 @@ CreateProcessUpdateJob.process(async (job, done) => {
     'DispatchsRepository',
   );
 
-  const processStatusStagesRepository = container.resolve<IProcessStatusStagesRepository>(
-    'ProcessStatusStagesRepository',
+  const processDispatchsRepository = container.resolve<IProcessDispatchsRepository>(
+    'ProcessDispatchsRepository',
   );
 
-  const createProcessStatusStageService = container.resolve(
-    CreateProcessStatusStageService,
+  const createProcessDispatchService = container.resolve(
+    CreateProcessDispatchService,
   );
 
   try {
@@ -84,14 +84,14 @@ CreateProcessUpdateJob.process(async (job, done) => {
 
         if (dispatch) {
           /** On insert a new Process x Dispatch, the old Dispatchs are setted to resolved */
-          const processStatusStages = await processStatusStagesRepository.findByProcessId(
+          const processDispatch = await processDispatchsRepository.findByProcessId(
             process.id,
           );
 
-          for await (const processStatusStagePrevious of processStatusStages) {
-            if (processStatusStagePrevious.has_pending) {
-              await processStatusStagesRepository.updatePending(
-                processStatusStagePrevious.id,
+          for await (const processDispatchPrevious of processDispatch) {
+            if (processDispatchPrevious.has_pending) {
+              await processDispatchsRepository.updatePending(
+                processDispatchPrevious.id,
                 true,
               );
             }
@@ -107,7 +107,7 @@ CreateProcessUpdateJob.process(async (job, done) => {
             ? `Fase do Processo possui prazo de ${dispatch.deadline} dias, contanto a partir de ${data}`
             : '';
 
-          await createProcessStatusStageService.execute({
+          await createProcessDispatchService.execute({
             has_pending,
             status_pending,
             resolved_pending,

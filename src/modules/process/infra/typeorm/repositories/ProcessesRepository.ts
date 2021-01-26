@@ -9,7 +9,7 @@ import ICreateProcessDTO from '@modules/process/dtos/ICreateProcessDTO';
 import IUpdateProcessDTO from '@modules/process/dtos/IUpdateProcessDTO';
 
 import Process from '@modules/process/infra/typeorm/entities/Process';
-import ProcessStatusStage from '@modules/processStatusStages/infra/typeorm/entities/ProcessStatusStage';
+import ProcessDispatch from '@modules/processDispatchs/infra/typeorm/entities/ProcessDispatch';
 
 class ProcessesRepository implements IProcessRepository {
   private repository: Repository<Process>;
@@ -141,20 +141,20 @@ class ProcessesRepository implements IProcessRepository {
       queryBuilder.andWhere((subQueryBuilder) => {
         const subQuery = subQueryBuilder
           .subQuery()
-          .select('process_id', 'process_status_stage_process_id')
-          .from(ProcessStatusStage, 'process_status_stage')
+          .select('process_id', 'process_dispatch_process_id')
+          .from(ProcessDispatch, 'process_dispatch')
           .innerJoin(
             (subQueryBuilder2) => {
               subQueryBuilder2
-                .select('MAX("created_at")', 'process_status_stage2_created_at')
-                .addSelect('id', 'process_status_stage2_id')
-                .from(ProcessStatusStage, 'process_status_stage2')
+                .select('MAX("created_at")', 'process_dispatch2_created_at')
+                .addSelect('id', 'process_dispatch2_id')
+                .from(ProcessDispatch, 'process_dispatch2')
                 .groupBy('id');
 
               return subQueryBuilder2;
             },
-            'process_status_stage2',
-            'process_status_stage2_id = id',
+            'process_dispatch2',
+            'process_dispatch2_id = id',
           );
 
         if (pendent) {
@@ -171,7 +171,7 @@ class ProcessesRepository implements IProcessRepository {
           );
         }
 
-        subQuery.groupBy('process_status_stage_process_id');
+        subQuery.groupBy('process_dispatch_process_id');
 
         const query = subQuery.getQuery();
 

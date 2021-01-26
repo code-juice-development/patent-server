@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 
 import Client from '@modules/clients/infra/typeorm/entities/Client';
-import ProcessStatusStage from '@modules/processStatusStages/infra/typeorm/entities/ProcessStatusStage';
+import ProcessDispatch from '@modules/processDispatchs/infra/typeorm/entities/ProcessDispatch';
 
 @Entity('processes')
 class Process {
@@ -45,10 +45,10 @@ class Process {
   client: Client;
 
   @OneToMany(
-    (_type) => ProcessStatusStage,
-    (processStatusStage) => processStatusStage.process,
+    (_type) => ProcessDispatch,
+    (processDispatch) => processDispatch.process,
   )
-  process_status_stages: ProcessStatusStage[];
+  process_dispatchs: ProcessDispatch[];
 
   @CreateDateColumn()
   created_at: string;

@@ -10,14 +10,14 @@ import isUserLoggedIn from '@modules/users/infra/http/middlewares/isUserLoggedIn
 const processUpdatesRouter = Router();
 const upload = multer(uploadConfig);
 
-const processStatusStagesController = new ProcessUpdatesController();
+const processUpdatesController = new ProcessUpdatesController();
 
 processUpdatesRouter.use(isUserLoggedIn);
 
 processUpdatesRouter.post(
   '/',
   upload.single('file'),
-  processStatusStagesController.create,
+  processUpdatesController.create,
 );
 
 export default processUpdatesRouter;

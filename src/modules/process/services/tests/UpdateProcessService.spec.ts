@@ -2,14 +2,14 @@ import AppError from '@shared/errors/AppError';
 
 import FakeProcessesRepository from '@modules/process/repositories/fakes/FakeProcessesRepository';
 import FakeDispatchsRepository from '@modules/dispatchs/repositories/fakes/FakeDispatchsRepository';
-import FakeProcessStatusStagesRepository from '@modules/processStatusStages/repositories/fakes/FakeProcessStatusStagesRepository';
+import FakeProcessDispatchsRepository from '@modules/processDispatchs/repositories/fakes/FakeProcessDispatchsRepository';
 
 import CreateProcessService from '@modules/process/services/CreateProcessService';
 import UpdateProcessService from '@modules/process/services/UpdateProcessService';
 
 let fakeProcessesRepository: FakeProcessesRepository;
 let fakeDispatchsRepository: FakeDispatchsRepository;
-let fakeProcessesStatusStagesRepository: FakeProcessStatusStagesRepository;
+let fakeProcessDispatchsRepository: FakeProcessDispatchsRepository;
 let createProcessService: CreateProcessService;
 let updateProcessService: UpdateProcessService;
 
@@ -17,11 +17,11 @@ describe('Update Process Service', () => {
   beforeEach(() => {
     fakeProcessesRepository = new FakeProcessesRepository();
     fakeDispatchsRepository = new FakeDispatchsRepository();
-    fakeProcessesStatusStagesRepository = new FakeProcessStatusStagesRepository();
+    fakeProcessDispatchsRepository = new FakeProcessDispatchsRepository();
     createProcessService = new CreateProcessService(
       fakeProcessesRepository,
       fakeDispatchsRepository,
-      fakeProcessesStatusStagesRepository,
+      fakeProcessDispatchsRepository,
     );
     updateProcessService = new UpdateProcessService(fakeProcessesRepository);
   });

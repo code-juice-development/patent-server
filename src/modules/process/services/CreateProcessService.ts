@@ -4,7 +4,7 @@ import AppError from '@shared/errors/AppError';
 
 import IProcessRepository from '@modules/process/repositories/IProcessesRepository';
 import IDispatchsRepository from '@modules/dispatchs/repositories/IDispatchsRepository';
-import IProcessStatusStagesRepository from '@modules/processStatusStages/repositories/IProcessStatusStagesRepository';
+import IProcessDispatchsRepository from '@modules/processDispatchs/repositories/IProcessDispatchsRepository';
 
 import Process from '@modules/process/infra/typeorm/entities/Process';
 
@@ -35,8 +35,8 @@ class CreateProcessService {
     @inject('DispatchsRepository')
     private dispatchsRepository: IDispatchsRepository,
 
-    @inject('ProcessStatusStagesRepository')
-    private processStatusStagesRepository: IProcessStatusStagesRepository,
+    @inject('ProcessDispatchsRepository')
+    private processDispatchsRepository: IProcessDispatchsRepository,
   ) {}
 
   public async execute({
@@ -87,7 +87,7 @@ class CreateProcessService {
           ? `Despacho possui prazo de ${dispatch.deadline} dias, contanto a partir de ${process.created_at}`
           : '';
 
-        await this.processStatusStagesRepository.create({
+        await this.processDispatchsRepository.create({
           has_pending,
           status_pending,
           resolved_pending,
