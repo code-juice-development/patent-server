@@ -5,8 +5,8 @@ const createClientMiddleware = celebrate({
     name: Joi.string().required(),
     email: Joi.string().email().required(),
     phone: Joi.string().length(11).required(),
-    cpf: Joi.string().length(11),
-    cnpj: Joi.string().length(14),
+    cpf: Joi.string().length(11).allow(''),
+    cnpj: Joi.string().length(14).allow(''),
   }),
 });
 

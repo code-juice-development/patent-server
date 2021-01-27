@@ -1,4 +1,5 @@
 import { injectable, inject } from 'tsyringe';
+import { cpf as cpfValidator, cnpj as cnpjValidator } from 'cpf-cnpj-validator';
 
 import AppError from '@shared/errors/AppError';
 
@@ -48,18 +49,26 @@ class CreateClientService {
     }
 
     if (cpf) {
-      const userWithSameCpf = await this.clientsRepository.findByCpf(cpf);
+      if (cpfValidator.isValid(cpf)) {
+        const userWithSameCpf = await this.clientsRepository.findByCpf(cpf);
 
-      if (userWithSameCpf) {
-        throw new AppError('Já existe um cliente cadastrado com esse CPF');
+        if (userWithSameCpf) {
+          throw new AppError('Já existe um cliente cadastrado com esse CPF');
+        }
+      } else {
+        throw new AppError('O CPF informado é inválido');
       }
     }
 
     if (cnpj) {
-      const userWithSameCnpj = await this.clientsRepository.findByCnpj(cnpj);
+      if (cnpjValidator.isValid(cnpj)) {
+        const userWithSameCnpj = await this.clientsRepository.findByCnpj(cnpj);
 
-      if (userWithSameCnpj) {
-        throw new AppError('Já existe um cliente cadastrado com esse CNPJ');
+        if (userWithSameCnpj) {
+          throw new AppError('Já existe um cliente cadastrado com esse CNPJ');
+        }
+      } else {
+        throw new AppError('O CNPJ informado é inválido');
       }
     }
 
