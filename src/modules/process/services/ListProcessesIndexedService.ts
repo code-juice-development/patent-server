@@ -23,6 +23,8 @@ interface IRequest {
 
   birthday: string | null;
 
+  filed: boolean | null;
+
   client_id: string | null;
 
   pendent: boolean | null;
@@ -51,6 +53,7 @@ class ListProcessesIndexedService {
     presentation,
     last_update,
     birthday,
+    filed,
     client_id,
     pendent,
   }: IRequest): Promise<IResponse> {
@@ -65,6 +68,7 @@ class ListProcessesIndexedService {
         presentation,
         last_update,
         birthday,
+        filed,
         client_id,
         pendent,
       },

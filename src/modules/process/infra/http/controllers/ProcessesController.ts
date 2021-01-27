@@ -16,6 +16,7 @@ class ProcessesController {
       presentation,
       last_update,
       birthday,
+      filed,
       client_id,
       dispatch_id,
     } = request.body;
@@ -29,6 +30,7 @@ class ProcessesController {
       presentation,
       last_update,
       birthday,
+      filed,
       client_id,
       dispatch_id,
     });
@@ -45,6 +47,7 @@ class ProcessesController {
       presentation,
       last_update,
       birthday,
+      filed,
       client_id,
     } = request.body;
 
@@ -58,6 +61,7 @@ class ProcessesController {
       presentation,
       last_update,
       birthday,
+      filed,
       client_id,
     });
 
@@ -95,6 +99,7 @@ class ProcessesController {
       presentation,
       last_update,
       birthday,
+      filed,
       client_id,
       pendent,
     } = request.query;
@@ -112,6 +117,7 @@ class ProcessesController {
     const presentation_verified = presentation ? String(presentation) : null;
     const last_update_verified = last_update ? String(last_update) : null;
     const birthday_verified = birthday ? String(birthday) : null;
+    const filed_verified = filed ? filed === 'true' : null;
     const client_id_verified = client_id ? String(client_id) : null;
     const pendent_verified = pendent ? pendent === 'true' : null;
 
@@ -125,6 +131,7 @@ class ProcessesController {
       presentation: presentation_verified,
       last_update: last_update_verified,
       birthday: birthday_verified,
+      filed: filed_verified,
       client_id: client_id_verified,
       pendent: pendent_verified,
     });

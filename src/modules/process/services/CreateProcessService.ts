@@ -21,6 +21,8 @@ interface IRequest {
 
   birthday: string;
 
+  filed: boolean;
+
   client_id: string;
 
   dispatch_id: string;
@@ -46,6 +48,7 @@ class CreateProcessService {
     presentation,
     last_update,
     birthday,
+    filed,
     client_id,
     dispatch_id,
   }: IRequest): Promise<Process> {
@@ -72,6 +75,7 @@ class CreateProcessService {
       presentation,
       last_update,
       birthday,
+      filed,
       client_id,
     });
 

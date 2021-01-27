@@ -13,6 +13,8 @@ interface IUpdateProcessDTO {
 
   birthday: string;
 
+  filed: boolean;
+
   client_id: string;
 }
 

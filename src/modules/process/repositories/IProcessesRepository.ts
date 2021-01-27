@@ -23,6 +23,8 @@ export interface IDataFindIndexed {
 
     birthday: string | null;
 
+    filed: boolean | null;
+
     client_id: string | null;
 
     pendent: boolean | null;

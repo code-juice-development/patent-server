@@ -11,6 +11,7 @@ const indexProcessesMiddleware = celebrate({
     presentation: Joi.string(),
     last_update: Joi.string().isoDate(),
     birthday: Joi.string().isoDate(),
+    filed: Joi.boolean(),
     client_id: Joi.string().uuid(),
     pendent: Joi.boolean(),
   }),

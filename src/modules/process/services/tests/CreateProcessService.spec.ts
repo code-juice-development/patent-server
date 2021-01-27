@@ -31,6 +31,7 @@ describe('Create Process Service', () => {
       presentation: 'Visual',
       last_update: '01/01/2021',
       birthday: '01/01/2021',
+      filed: false,
       client_id: '95342393000128',
       dispatch_id: '',
     });
@@ -57,6 +58,7 @@ describe('Create Process Service', () => {
       presentation: 'Visual',
       last_update: '01/01/2021',
       birthday: '01/01/2021',
+      filed: false,
       client_id: '95342393000128',
       dispatch_id: dispatch.id,
     });
@@ -78,6 +80,7 @@ describe('Create Process Service', () => {
       presentation: 'Visual',
       last_update: '01/01/2021',
       birthday: '01/01/2021',
+      filed: false,
       client_id: '95342393000128',
       dispatch_id: '',
     });
@@ -90,6 +93,7 @@ describe('Create Process Service', () => {
         presentation: 'Visual',
         last_update: '01/01/2021',
         birthday: '01/01/2021',
+        filed: false,
         client_id: '95342393000128',
         dispatch_id: '',
       }),
@@ -104,6 +108,7 @@ describe('Create Process Service', () => {
       presentation: 'Visual',
       last_update: '01/01/2021',
       birthday: '01/01/2021',
+      filed: false,
       client_id: '95342393000128',
       dispatch_id: '',
     });
@@ -116,6 +121,7 @@ describe('Create Process Service', () => {
         presentation: 'Visual',
         last_update: '01/01/2021',
         birthday: '01/01/2021',
+        filed: false,
         client_id: '95342393000128',
         dispatch_id: '',
       }),

@@ -36,6 +36,9 @@ class Process {
   birthday: string;
 
   @Column()
+  filed: boolean;
+
+  @Column()
   client_id: string;
 
   @ManyToOne((_type) => Client, (client) => client.process, {

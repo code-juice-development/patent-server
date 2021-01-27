@@ -25,6 +25,7 @@ class ProcessesRepository implements IProcessRepository {
     presentation,
     last_update,
     birthday,
+    filed,
     client_id,
   }: ICreateProcessDTO): Promise<Process> {
     const process = this.repository.create({
@@ -34,6 +35,7 @@ class ProcessesRepository implements IProcessRepository {
       presentation,
       last_update,
       birthday,
+      filed,
       client_id,
     });
 
@@ -50,6 +52,7 @@ class ProcessesRepository implements IProcessRepository {
     presentation,
     last_update,
     birthday,
+    filed,
     client_id,
   }: IUpdateProcessDTO): Promise<Process> {
     const process = this.repository.create({
@@ -60,6 +63,7 @@ class ProcessesRepository implements IProcessRepository {
       presentation,
       last_update,
       birthday,
+      filed,
       client_id,
     });
 

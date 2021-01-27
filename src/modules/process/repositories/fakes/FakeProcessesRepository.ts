@@ -24,6 +24,7 @@ class FakeProcessesRepository implements IProcessesRepository {
     presentation,
     last_update,
     birthday,
+    filed,
     client_id,
   }: ICreateProcessDTO): Promise<Process> {
     const process = new Process();
@@ -38,6 +39,7 @@ class FakeProcessesRepository implements IProcessesRepository {
       presentation,
       last_update,
       birthday,
+      filed,
       client_id,
     });
 
@@ -54,6 +56,7 @@ class FakeProcessesRepository implements IProcessesRepository {
     presentation,
     last_update,
     birthday,
+    filed,
     client_id,
   }: IUpdateProcessDTO): Promise<Process> {
     const process = this.processes.find(
@@ -67,6 +70,7 @@ class FakeProcessesRepository implements IProcessesRepository {
       presentation,
       last_update,
       birthday,
+      filed,
       client_id,
     });
 
@@ -122,6 +126,7 @@ class FakeProcessesRepository implements IProcessesRepository {
       presentation,
       last_update,
       birthday,
+      filed,
       client_id,
     } = filter;
 
@@ -135,6 +140,7 @@ class FakeProcessesRepository implements IProcessesRepository {
         return false;
       if (last_update !== null && process.last_update !== last_update)
         return false;
+      if (filed !== null && process.filed !== filed) return false;
       if (birthday !== null && process.birthday !== birthday) return false;
       if (client_id !== null && process.client_id !== client_id) return false;
 
@@ -146,7 +152,7 @@ class FakeProcessesRepository implements IProcessesRepository {
     return { total, processes };
   }
 
-  findAllBirthdays(): Promise<Process[]> {
+  public async findAllBirthdays(): Promise<Process[]> {
     throw new Error('Method not implemented.');
   }
 }

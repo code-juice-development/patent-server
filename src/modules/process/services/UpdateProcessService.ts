@@ -21,6 +21,8 @@ interface IRequest {
 
   birthday: string;
 
+  filed: boolean;
+
   client_id: string;
 }
 
@@ -39,6 +41,7 @@ class UpdateProcessService {
     presentation,
     last_update,
     birthday,
+    filed,
     client_id,
   }: IRequest): Promise<Process> {
     const processWithSameNumber = await this.processRepository.findByNumber(
@@ -65,6 +68,7 @@ class UpdateProcessService {
       presentation,
       last_update,
       birthday,
+      filed,
       client_id,
     });
 

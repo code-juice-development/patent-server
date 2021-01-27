@@ -11,6 +11,8 @@ interface ICreateProcessDTO {
 
   birthday: string;
 
+  filed: boolean;
+
   client_id: string;
 }
 

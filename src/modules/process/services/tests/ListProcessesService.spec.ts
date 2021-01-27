@@ -32,6 +32,7 @@ describe('List Processes Service', () => {
       presentation: 'Visual',
       last_update: '01/01/2021',
       birthday: '01/01/2021',
+      filed: false,
       client_id: '95342393000128',
       dispatch_id: '',
     });
@@ -43,6 +44,7 @@ describe('List Processes Service', () => {
       presentation: 'Visual',
       last_update: '15/01/2021',
       birthday: '15/01/2021',
+      filed: false,
       client_id: '6655',
       dispatch_id: '',
     });
