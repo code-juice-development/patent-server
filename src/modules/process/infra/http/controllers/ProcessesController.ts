@@ -117,7 +117,9 @@ class ProcessesController {
     const presentation_verified = presentation ? String(presentation) : null;
     const last_update_verified = last_update ? String(last_update) : null;
     const birthday_verified = birthday ? String(birthday) : null;
-    const filed_verified = filed ? filed === 'true' : null;
+    const filed_verified = filed
+      ? filed === 'true' || !(filed === 'false')
+      : null;
     const client_id_verified = client_id ? String(client_id) : null;
     const pendent_verified = pendent ? pendent === 'true' : null;
 
