@@ -19,7 +19,7 @@ describe('Create Client Service', () => {
       email: 'jjmultimarcas@gmail.com',
       phone: '47995566320',
       cpf: '',
-      cnpj: '95342393000128',
+      cnpj: '52850101000155',
     });
 
     expect(client).toHaveProperty('id');
@@ -31,7 +31,7 @@ describe('Create Client Service', () => {
       email: 'jjmultimarcas@gmail.com',
       phone: '47995566320',
       cpf: '',
-      cnpj: '95342393000128',
+      cnpj: '77646014000101',
     });
 
     expect(
@@ -40,7 +40,7 @@ describe('Create Client Service', () => {
         email: 'jjmultimarcas@gmail.com',
         phone: '47988554960',
         cpf: '',
-        cnpj: '95342393000125',
+        cnpj: '52850101000155',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -51,7 +51,7 @@ describe('Create Client Service', () => {
       email: 'jjmultimarcas@gmail.com',
       phone: '47995566320',
       cpf: '',
-      cnpj: '95342393000128',
+      cnpj: '77646014000101',
     });
 
     expect(
@@ -60,7 +60,7 @@ describe('Create Client Service', () => {
         email: 'jjmarcas@gmail.com',
         phone: '47995566320',
         cpf: '',
-        cnpj: '95342393000125',
+        cnpj: '52850101000155',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -70,7 +70,7 @@ describe('Create Client Service', () => {
       name: 'JJ Multimarcas',
       email: 'jjmultimarcas@gmail.com',
       phone: '47995566320',
-      cpf: '08576540980',
+      cpf: '67271104097',
       cnpj: '',
     });
 
@@ -79,7 +79,7 @@ describe('Create Client Service', () => {
         name: 'JJ Marcas',
         email: 'jjmarcas@gmail.com',
         phone: '47995566851',
-        cpf: '08576540980',
+        cpf: '67271104097',
         cnpj: '',
       }),
     ).rejects.toBeInstanceOf(AppError);
@@ -91,7 +91,7 @@ describe('Create Client Service', () => {
       email: 'jjmultimarcas@gmail.com',
       phone: '47995566320',
       cpf: '',
-      cnpj: '95342393000128',
+      cnpj: '77646014000101',
     });
 
     expect(
@@ -100,7 +100,7 @@ describe('Create Client Service', () => {
         email: 'jjmarcas@gmail.com',
         phone: '47995566851',
         cpf: '',
-        cnpj: '95342393000128',
+        cnpj: '77646014000101',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -113,6 +113,30 @@ describe('Create Client Service', () => {
         phone: '47995566851',
         cpf: '',
         cnpj: '',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should not be able to create a new Client with wrong CPF', async () => {
+    expect(
+      createClientService.execute({
+        name: 'JJ Marcas',
+        email: 'jjmarcas@gmail.com',
+        phone: '47995566851',
+        cpf: '67271104095',
+        cnpj: '',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should not be able to create a new Client with wrong CNPJ', async () => {
+    expect(
+      createClientService.execute({
+        name: 'JJ Marcas',
+        email: 'jjmarcas@gmail.com',
+        phone: '47995566851',
+        cpf: '',
+        cnpj: '77646014000102',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

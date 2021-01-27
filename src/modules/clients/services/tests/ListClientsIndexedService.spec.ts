@@ -21,16 +21,16 @@ describe('List Clients Indexed Service', () => {
       name: 'JJ Multimarcas',
       email: 'jjmultimarcas@gmail.com',
       phone: '47995566320',
-      cpf: '08576540230',
-      cnpj: '95342393000128',
+      cpf: '67271104097',
+      cnpj: '77646014000101',
     });
 
     const clientGGGames = await createClientService.execute({
       name: 'GG Games',
       email: 'gggames@gmail.com',
       phone: '4788554960',
-      cpf: '08576540123',
-      cnpj: '95342393000120',
+      cpf: '90496093096',
+      cnpj: '52850101000155',
     });
 
     const responseClientsJJMultimarcas = await listClientsIndexedService.execute(

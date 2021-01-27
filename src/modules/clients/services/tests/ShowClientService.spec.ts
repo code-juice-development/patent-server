@@ -21,8 +21,8 @@ describe('Show Client Service', () => {
       name: 'JJ Multimarcas',
       email: 'jjmultimarcas@gmail.com',
       phone: '47995566320',
-      cpf: '08576540230',
-      cnpj: '95342393000128',
+      cpf: '67271104097',
+      cnpj: '77646014000101',
     });
 
     const { id } = client;
