@@ -17,11 +17,13 @@ export interface IDataFindIndexed {
 
     description: string | null;
 
-    deadline: string | null;
+    deadline: number | null;
 
     send_message: boolean | null;
 
     send_email: boolean | null;
+
+    after_sale: number | null;
   };
 }
 

@@ -23,8 +23,11 @@ class Dispatch {
   @Column()
   description: string;
 
+  /**
+   * @description Days
+   */
   @Column()
-  deadline: string;
+  deadline: number | null;
 
   @Column()
   send_message: boolean;
@@ -37,6 +40,12 @@ class Dispatch {
 
   @Column()
   model_email: string;
+
+  /**
+   * @description Months
+   */
+  @Column()
+  after_sale: number | null;
 
   @OneToMany(
     (_type) => ProcessDispatch,

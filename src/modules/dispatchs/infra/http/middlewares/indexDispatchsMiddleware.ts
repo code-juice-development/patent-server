@@ -11,6 +11,7 @@ const indexDispatchMiddleware = celebrate({
     deadline: Joi.number(),
     send_message: Joi.boolean(),
     send_email: Joi.boolean(),
+    after_sale: Joi.number(),
   }),
 });
 

@@ -13,6 +13,7 @@ const updateDispatchMiddleware = celebrate({
     model_message: Joi.string(),
     send_email: Joi.boolean(),
     model_email: Joi.string(),
+    after_sale: Joi.number(),
   }),
 });
 

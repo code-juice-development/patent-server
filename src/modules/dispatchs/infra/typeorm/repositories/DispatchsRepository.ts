@@ -26,6 +26,7 @@ class DispatchsRepository implements IDispatchsRepository {
     model_message,
     send_email,
     model_email,
+    after_sale,
   }: ICreateDispatchsDTO): Promise<Dispatch> {
     const dispatch = this.repository.create({
       name,
@@ -36,6 +37,7 @@ class DispatchsRepository implements IDispatchsRepository {
       model_message,
       send_email,
       model_email,
+      after_sale,
     });
 
     await this.repository.save(dispatch);
@@ -53,6 +55,7 @@ class DispatchsRepository implements IDispatchsRepository {
     model_message,
     send_email,
     model_email,
+    after_sale,
   }: IUpdateDispatchsDTO): Promise<Dispatch> {
     const dispatch = this.repository.create({
       id,
@@ -64,6 +67,7 @@ class DispatchsRepository implements IDispatchsRepository {
       model_message,
       send_email,
       model_email,
+      after_sale,
     });
 
     await this.repository.save(dispatch);

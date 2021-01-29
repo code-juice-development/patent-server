@@ -15,7 +15,7 @@ interface IRequest {
 
   description: string;
 
-  deadline: string;
+  deadline: number | null;
 
   send_message: boolean;
 
@@ -24,6 +24,8 @@ interface IRequest {
   send_email: boolean;
 
   model_email: string;
+
+  after_sale: number | null;
 }
 
 @injectable()
@@ -43,6 +45,7 @@ class UpdateDispatchService {
     model_message,
     send_email,
     model_email,
+    after_sale,
   }: IRequest): Promise<Dispatch> {
     const dispatchWithSameName = await this.dispatchsRepository.findByName(
       name,
@@ -70,6 +73,7 @@ class UpdateDispatchService {
       model_message,
       send_email,
       model_email,
+      after_sale,
     });
 
     return dispatch;

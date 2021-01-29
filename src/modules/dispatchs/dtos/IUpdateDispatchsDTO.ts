@@ -7,7 +7,7 @@ interface IUpdateDispatchsDTO {
 
   description: string;
 
-  deadline: string;
+  deadline: number | null;
 
   send_message: boolean;
 
@@ -16,6 +16,8 @@ interface IUpdateDispatchsDTO {
   send_email: boolean;
 
   model_email: string;
+
+  after_sale: number | null;
 }
 
 export default IUpdateDispatchsDTO;

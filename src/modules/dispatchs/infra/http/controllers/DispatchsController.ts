@@ -18,6 +18,7 @@ class DispatchsController {
       model_message,
       send_email,
       model_email,
+      after_sale,
     } = request.body;
 
     const createDispatchService = container.resolve(CreateDispatchService);
@@ -31,6 +32,7 @@ class DispatchsController {
       model_message,
       send_email,
       model_email,
+      after_sale,
     });
 
     return response.status(201).json(processStage);
@@ -47,6 +49,7 @@ class DispatchsController {
       model_message,
       send_email,
       model_email,
+      after_sale,
     } = request.body;
 
     const updateDispatchService = container.resolve(UpdateDispatchService);
@@ -61,6 +64,7 @@ class DispatchsController {
       model_message,
       send_email,
       model_email,
+      after_sale,
     });
 
     return response.status(201).json(processStage);
@@ -97,6 +101,7 @@ class DispatchsController {
       deadline,
       send_message,
       send_email,
+      after_sale,
     } = request.query;
 
     const listDispatchsIndexedService = container.resolve(
@@ -109,9 +114,10 @@ class DispatchsController {
     const name_verified = name ? String(name) : null;
     const code_verified = code ? String(code) : null;
     const description_verified = description ? String(description) : null;
-    const deadline_verified = deadline ? String(deadline) : null;
+    const deadline_verified = deadline ? Number(deadline) : null;
     const send_message_verified = send_message ? send_message === 'true' : null;
     const send_email_verified = send_email ? send_email === 'true' : null;
+    const after_sale_verified = after_sale ? Number(after_sale) : null;
 
     const { total, dispatchs } = await listDispatchsIndexedService.execute({
       page: page_verified,
@@ -123,6 +129,7 @@ class DispatchsController {
       deadline: deadline_verified,
       send_message: send_message_verified,
       send_email: send_email_verified,
+      after_sale: after_sale_verified,
     });
 
     response.header('Access-Control-Expose-Headers', 'X-Total-Count');

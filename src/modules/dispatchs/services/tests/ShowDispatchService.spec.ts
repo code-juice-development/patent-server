@@ -21,11 +21,12 @@ describe('Show Dispatch Service', () => {
       name: 'Reavaliação',
       code: 'X4568',
       description: 'Reavaliar o requerimento pendente no protocolo',
-      deadline: '15',
+      deadline: 15,
       send_message: true,
       model_message: 'Oi, etapa atualizada',
       send_email: false,
       model_email: '',
+      after_sale: null,
     });
 
     const { id } = dispatch;

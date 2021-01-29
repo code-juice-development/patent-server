@@ -5,7 +5,7 @@ interface ICreateDispatchsDTO {
 
   description: string;
 
-  deadline: string;
+  deadline: number | null;
 
   send_message: boolean;
 
@@ -14,6 +14,8 @@ interface ICreateDispatchsDTO {
   send_email: boolean;
 
   model_email: string;
+
+  after_sale: number | null;
 }
 
 export default ICreateDispatchsDTO;

@@ -21,22 +21,24 @@ describe('List Dispatchs Indexed Service', () => {
       name: 'Reavaliação',
       code: 'X4568',
       description: 'Reavaliar o requerimento pendente no protocolo',
-      deadline: '15',
+      deadline: 15,
       send_message: true,
       model_message: 'Oi, etapa atualizada',
       send_email: false,
       model_email: '',
+      after_sale: null,
     });
 
     const dispatchConcluded = await createDispatchService.execute({
       name: 'Concluído',
       code: 'C4558',
       description: 'Concluído o requerimento pendente no protocolo',
-      deadline: '15',
+      deadline: 15,
       send_message: false,
       model_message: 'Oi, etapa atualizada',
       send_email: true,
       model_email: '',
+      after_sale: null,
     });
 
     const responseDispatchReavaliation = await listDispatchsIndexedService.execute(
@@ -50,6 +52,7 @@ describe('List Dispatchs Indexed Service', () => {
         deadline: null,
         send_message: true,
         send_email: null,
+        after_sale: null,
       },
     );
 
@@ -64,6 +67,7 @@ describe('List Dispatchs Indexed Service', () => {
         deadline: null,
         send_message: null,
         send_email: true,
+        after_sale: null,
       },
     );
 

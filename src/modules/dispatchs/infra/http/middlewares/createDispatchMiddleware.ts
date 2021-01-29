@@ -10,6 +10,7 @@ const createDispatchMiddleware = celebrate({
     model_message: Joi.string().allow(null, '').optional(),
     send_email: Joi.boolean().optional(),
     model_email: Joi.string().allow(null, '').optional(),
+    after_sale: Joi.number(),
   }),
 });
 

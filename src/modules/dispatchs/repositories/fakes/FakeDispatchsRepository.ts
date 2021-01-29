@@ -26,6 +26,7 @@ class DispatchsRepository implements IDispatchsRepository {
     model_message,
     send_email,
     model_email,
+    after_sale,
   }: ICreateDispatchsDTO): Promise<Dispatch> {
     const dispatch = new Dispatch();
 
@@ -41,6 +42,7 @@ class DispatchsRepository implements IDispatchsRepository {
       model_message,
       send_email,
       model_email,
+      after_sale,
     });
 
     this.dispatchs.push(dispatch);
@@ -58,6 +60,7 @@ class DispatchsRepository implements IDispatchsRepository {
     model_message,
     send_email,
     model_email,
+    after_sale,
   }: IUpdateDispatchsDTO): Promise<Dispatch> {
     const dispatch = this.dispatchs.find(
       (actualDispatch) => actualDispatch.id === id,
@@ -72,6 +75,7 @@ class DispatchsRepository implements IDispatchsRepository {
       model_message,
       send_email,
       model_email,
+      after_sale,
     });
 
     return dispatch ?? new Dispatch();
@@ -124,6 +128,7 @@ class DispatchsRepository implements IDispatchsRepository {
       deadline,
       send_message,
       send_email,
+      after_sale,
     } = filter;
 
     const total = this.dispatchs.length;
@@ -137,6 +142,8 @@ class DispatchsRepository implements IDispatchsRepository {
       if (send_message !== null && dispatch.send_message !== send_message)
         return false;
       if (send_email !== null && dispatch.send_email !== send_email)
+        return false;
+      if (after_sale !== null && dispatch.after_sale !== after_sale)
         return false;
 
       return true;

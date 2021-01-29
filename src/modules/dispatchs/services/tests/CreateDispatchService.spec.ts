@@ -18,11 +18,12 @@ describe('Create Dispatch Service', () => {
       name: 'Reavaliação',
       code: 'X4568',
       description: 'Reavaliar o requerimento pendente no protocolo',
-      deadline: '15',
+      deadline: 15,
       send_message: true,
       model_message: 'Oi, etapa atualizada',
       send_email: false,
       model_email: '',
+      after_sale: 15,
     });
 
     expect(dispatch).toHaveProperty('id');
@@ -33,11 +34,12 @@ describe('Create Dispatch Service', () => {
       name: 'Reavaliação',
       code: '',
       description: '',
-      deadline: '',
+      deadline: null,
       send_message: false,
       model_message: '',
       send_email: false,
       model_email: '',
+      after_sale: null,
     });
 
     expect(
@@ -45,11 +47,12 @@ describe('Create Dispatch Service', () => {
         name: 'Reavaliação',
         code: '',
         description: '',
-        deadline: '',
+        deadline: null,
         send_message: false,
         model_message: '',
         send_email: false,
         model_email: '',
+        after_sale: null,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -59,11 +62,12 @@ describe('Create Dispatch Service', () => {
       name: 'Reavaliação',
       code: 'X6050',
       description: '',
-      deadline: '',
+      deadline: null,
       send_message: false,
       model_message: '',
       send_email: false,
       model_email: '',
+      after_sale: null,
     });
 
     expect(
@@ -71,11 +75,12 @@ describe('Create Dispatch Service', () => {
         name: 'Reavaliado',
         code: 'X6050',
         description: '',
-        deadline: '',
+        deadline: null,
         send_message: false,
         model_message: '',
         send_email: false,
         model_email: '',
+        after_sale: null,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

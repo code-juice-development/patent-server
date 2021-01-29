@@ -17,11 +17,13 @@ interface IRequest {
 
   description: string | null;
 
-  deadline: string | null;
+  deadline: number | null;
 
   send_message: boolean | null;
 
   send_email: boolean | null;
+
+  after_sale: number | null;
 }
 
 interface IResponse {
@@ -47,12 +49,21 @@ class ListDispatchsIndexedService {
     deadline,
     send_message,
     send_email,
+    after_sale,
   }: IRequest): Promise<IResponse> {
     const { total, dispatchs } = await this.dispatchsRepository.findIndexed({
       page,
       rows,
       ordenation,
-      filter: { name, code, description, deadline, send_message, send_email },
+      filter: {
+        name,
+        code,
+        description,
+        deadline,
+        send_message,
+        send_email,
+        after_sale,
+      },
     });
 
     return { total, dispatchs };

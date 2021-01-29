@@ -21,11 +21,12 @@ describe('Update Dispatch Service', () => {
       name: 'Reavaliação',
       code: 'X4568',
       description: 'Reavaliar o requerimento pendente no protocolo',
-      deadline: '15',
+      deadline: 15,
       send_message: true,
       model_message: 'Oi, etapa atualizada',
       send_email: false,
       model_email: '',
+      after_sale: null,
     });
 
     await updateDispatchService.execute({
@@ -33,11 +34,12 @@ describe('Update Dispatch Service', () => {
       name: 'Concluído',
       code: 'C4558',
       description: 'Concluído o requerimento',
-      deadline: '15',
+      deadline: 15,
       send_message: true,
       model_message: 'Oi, etapa Concluída',
       send_email: false,
       model_email: 'AAAA',
+      after_sale: null,
     });
 
     const dispatch = await fakeDispatchsRepository.findById(id);
@@ -46,7 +48,7 @@ describe('Update Dispatch Service', () => {
     expect(dispatch?.name).toBe('Concluído');
     expect(dispatch?.code).toBe('C4558');
     expect(dispatch?.description).toBe('Concluído o requerimento');
-    expect(dispatch?.deadline).toBe('15');
+    expect(dispatch?.deadline).toBe(15);
     expect(dispatch?.send_message).toBe(true);
     expect(dispatch?.model_message).toBe('Oi, etapa Concluída');
     expect(dispatch?.send_email).toBe(false);
@@ -58,22 +60,24 @@ describe('Update Dispatch Service', () => {
       name: 'Reavaliação',
       code: '',
       description: '',
-      deadline: '',
+      deadline: null,
       send_message: false,
       model_message: '',
       send_email: false,
       model_email: '',
+      after_sale: null,
     });
 
     const { id } = await createDispatchService.execute({
       name: 'Reavaliado',
       code: 'X550',
       description: '',
-      deadline: '',
+      deadline: null,
       send_message: false,
       model_message: '',
       send_email: false,
       model_email: '',
+      after_sale: null,
     });
 
     expect(
@@ -82,11 +86,12 @@ describe('Update Dispatch Service', () => {
         name: 'Reavaliação',
         code: 'X560',
         description: '',
-        deadline: '',
+        deadline: null,
         send_message: false,
         model_message: '',
         send_email: false,
         model_email: '',
+        after_sale: null,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -96,22 +101,24 @@ describe('Update Dispatch Service', () => {
       name: 'Reavaliação',
       code: 'X550',
       description: '',
-      deadline: '',
+      deadline: null,
       send_message: false,
       model_message: '',
       send_email: false,
       model_email: '',
+      after_sale: null,
     });
 
     const { id } = await createDispatchService.execute({
       name: 'Reavaliado',
       code: 'X560',
       description: '',
-      deadline: '',
+      deadline: null,
       send_message: false,
       model_message: '',
       send_email: false,
       model_email: '',
+      after_sale: null,
     });
 
     expect(
@@ -120,11 +127,12 @@ describe('Update Dispatch Service', () => {
         name: 'Reavaliado',
         code: 'X550',
         description: '',
-        deadline: '',
+        deadline: null,
         send_message: false,
         model_message: '',
         send_email: false,
         model_email: '',
+        after_sale: null,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
