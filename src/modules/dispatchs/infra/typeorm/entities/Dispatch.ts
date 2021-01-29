@@ -26,8 +26,15 @@ class Dispatch {
   /**
    * @description Days
    */
-  @Column()
-  deadline: number | null;
+  @Column({
+    nullable: true,
+    type: 'varchar',
+    transformer: {
+      to: (value: number): string => String(value),
+      from: (value: string): number | null => (value ? Number(value) : null),
+    },
+  })
+  deadline?: number | null;
 
   @Column()
   send_message: boolean;
@@ -44,8 +51,15 @@ class Dispatch {
   /**
    * @description Months
    */
-  @Column()
-  after_sale: number | null;
+  @Column({
+    nullable: true,
+    type: 'varchar',
+    transformer: {
+      to: (value: number): string => String(value),
+      from: (value: string): number | null => (value ? Number(value) : null),
+    },
+  })
+  after_sale?: number | null;
 
   @OneToMany(
     (_type) => ProcessDispatch,
