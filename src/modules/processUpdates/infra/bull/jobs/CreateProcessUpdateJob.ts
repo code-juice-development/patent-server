@@ -97,9 +97,14 @@ CreateProcessUpdateJob.process(async (job, done) => {
             }
           }
 
+          /** Formated Date */
+          const [day, month, year] = data.split('/');
+          const date = new Date(`${month}-${day}-${year}`).toDateString();
+
           /** Insert a new Process x Dispatch */
           const has_pending = !!dispatch.deadline;
           const resolved_pending = false;
+          const publication = date;
           const process_id = process.id;
           const dispatch_id = dispatch.id;
 
@@ -111,16 +116,12 @@ CreateProcessUpdateJob.process(async (job, done) => {
             has_pending,
             status_pending,
             resolved_pending,
+            publication,
             process_id,
             dispatch_id,
           });
 
-          const [day, month, year] = data.split('/');
-          const last_update = new Date(
-            `${month}-${day}-${year}`,
-          ).toDateString();
-
-          await processesRepository.update({ ...process, last_update });
+          await processesRepository.update({ ...process, last_update: date });
         }
       }
     }

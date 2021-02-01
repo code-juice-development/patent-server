@@ -26,6 +26,9 @@ class ProcessDispatch {
   resolved_pending: boolean;
 
   @Column()
+  publication: string;
+
+  @Column()
   process_id: string;
 
   @ManyToOne((_type) => Process, (process) => process.process_dispatchs, {

@@ -85,16 +85,18 @@ class CreateProcessService {
       if (dispatch) {
         const has_pending = !!dispatch.deadline;
         const resolved_pending = false;
+        const publication = new Date(process.created_at).toDateString();
         const process_id = process.id;
 
         const status_pending = has_pending
-          ? `Despacho possui prazo de ${dispatch.deadline} dias, contanto a partir de ${process.created_at}`
+          ? `Despacho possui prazo de ${dispatch.deadline} dias, contanto a partir de ${publication}`
           : '';
 
         await this.processDispatchsRepository.create({
           has_pending,
           status_pending,
           resolved_pending,
+          publication,
           process_id,
           dispatch_id,
         });

@@ -21,6 +21,7 @@ class FakeProcessDispatchsRepository implements IProcessDispatchsRepository {
     has_pending,
     status_pending,
     resolved_pending,
+    publication,
     process_id,
     dispatch_id,
   }: ICreateProcessDispatchDTO): Promise<ProcessDispatch> {
@@ -33,6 +34,7 @@ class FakeProcessDispatchsRepository implements IProcessDispatchsRepository {
       has_pending,
       status_pending,
       resolved_pending,
+      publication,
       process_id,
       dispatch_id,
     });
@@ -47,6 +49,7 @@ class FakeProcessDispatchsRepository implements IProcessDispatchsRepository {
     has_pending,
     status_pending,
     resolved_pending,
+    publication,
     process_id,
     dispatch_id,
   }: IUpdateProcessDispatchDTO): Promise<ProcessDispatch> {
@@ -58,6 +61,7 @@ class FakeProcessDispatchsRepository implements IProcessDispatchsRepository {
       has_pending,
       status_pending,
       resolved_pending,
+      publication,
       process_id,
       dispatch_id,
     });
@@ -151,18 +155,6 @@ class FakeProcessDispatchsRepository implements IProcessDispatchsRepository {
     const process_dispatchs = filteredProcessDispatchs.slice(page * rows, rows);
 
     return { total, process_dispatchs };
-  }
-
-  public async findDispatchPendentActualTotal(
-    dispatch_id: string,
-  ): Promise<number> {
-    throw new Error('Method not implemented.');
-  }
-
-  public async findDispatchResolvedActualTotal(
-    dispatch_id: string,
-  ): Promise<number> {
-    throw new Error('Method not implemented.');
   }
 }
 

@@ -2,6 +2,7 @@ import { v4 } from 'uuid';
 
 import IDispatchsRepository, {
   IDataFindIndexed,
+  IDispatchTotal,
   IResultFindIndexed,
 } from '@modules/dispatchs/repositories/IDispatchsRepository';
 
@@ -152,6 +153,18 @@ class DispatchsRepository implements IDispatchsRepository {
     const dispatchs = filteredDispatchs.slice(page * rows, rows);
 
     return { total, dispatchs };
+  }
+
+  public async findDispatchTotal(): Promise<IDispatchTotal[]> {
+    throw new Error('Method not implemented.');
+  }
+
+  public async findDispatchTotalPendent(): Promise<IDispatchTotal[]> {
+    throw new Error('Method not implemented.');
+  }
+
+  public async findDispatchTotalAfterSale(): Promise<IDispatchTotal[]> {
+    throw new Error('Method not implemented.');
   }
 }
 

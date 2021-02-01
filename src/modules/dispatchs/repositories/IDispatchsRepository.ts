@@ -33,6 +33,12 @@ export interface IResultFindIndexed {
   dispatchs: Dispatch[];
 }
 
+export interface IDispatchTotal {
+  dispatch: Dispatch;
+  total: number;
+  date: string;
+}
+
 interface IDispatchsRepository {
   create(data: ICreateDispatchsDTO): Promise<Dispatch>;
 
@@ -49,6 +55,12 @@ interface IDispatchsRepository {
   findByCode(code: string): Promise<Dispatch | undefined>;
 
   findIndexed(data: IDataFindIndexed): Promise<IResultFindIndexed>;
+
+  findDispatchTotal(): Promise<IDispatchTotal[]>;
+
+  findDispatchTotalPendent(): Promise<IDispatchTotal[]>;
+
+  findDispatchTotalAfterSale(): Promise<IDispatchTotal[]>;
 }
 
 export default IDispatchsRepository;

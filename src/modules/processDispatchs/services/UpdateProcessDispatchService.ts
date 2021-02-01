@@ -13,6 +13,8 @@ interface IRequest {
 
   resolved_pending: boolean;
 
+  publication: string;
+
   process_id: string;
 
   dispatch_id: string;
@@ -30,6 +32,7 @@ class UpdateProcessDispatchService {
     has_pending,
     status_pending,
     resolved_pending,
+    publication,
     process_id,
     dispatch_id,
   }: IRequest): Promise<ProcessDispatch> {
@@ -38,6 +41,7 @@ class UpdateProcessDispatchService {
       has_pending,
       status_pending,
       resolved_pending,
+      publication,
       process_id,
       dispatch_id,
     });

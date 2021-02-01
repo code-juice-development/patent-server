@@ -10,9 +10,9 @@ const updateDispatchMiddleware = celebrate({
     description: Joi.string().required(),
     deadline: Joi.number(),
     send_message: Joi.boolean(),
-    model_message: Joi.string(),
+    model_message: Joi.string().allow(null, '').optional(),
     send_email: Joi.boolean(),
-    model_email: Joi.string(),
+    model_email: Joi.string().allow(null, '').optional(),
     after_sale: Joi.number(),
   }),
 });

@@ -48,10 +48,6 @@ interface IProcessDispatchsRepository {
   findByDispatchId(dispatch_id: string): Promise<ProcessDispatch[]>;
 
   findIndexed(data: IDataFindIndexed): Promise<IResultFindIndexed>;
-
-  findDispatchPendentActualTotal(dispatch_id: string): Promise<number>;
-
-  findDispatchResolvedActualTotal(dispatch_id: string): Promise<number>;
 }
 
 export default IProcessDispatchsRepository;

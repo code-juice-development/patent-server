@@ -5,6 +5,8 @@ interface ICreateProcessDispatchDTO {
 
   resolved_pending: boolean;
 
+  publication: string;
+
   process_id: string;
 
   dispatch_id: string;

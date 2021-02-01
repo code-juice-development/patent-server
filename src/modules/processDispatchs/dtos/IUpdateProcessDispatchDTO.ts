@@ -7,6 +7,8 @@ interface IUpdateProcessDispatchDTO {
 
   resolved_pending: boolean;
 
+  publication: string;
+
   process_id: string;
 
   dispatch_id: string;

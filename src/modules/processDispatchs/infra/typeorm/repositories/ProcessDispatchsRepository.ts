@@ -1,4 +1,4 @@
-import { Repository, getRepository, Brackets } from 'typeorm';
+import { Repository, getRepository } from 'typeorm';
 
 import IProcessDispatchsRepository, {
   IDataFindIndexed,
@@ -21,6 +21,7 @@ class ProcessDispatchsRepository implements IProcessDispatchsRepository {
     has_pending,
     status_pending,
     resolved_pending,
+    publication,
     process_id,
     dispatch_id,
   }: ICreateProcessDispatchDTO): Promise<ProcessDispatch> {
@@ -28,6 +29,7 @@ class ProcessDispatchsRepository implements IProcessDispatchsRepository {
       has_pending,
       status_pending,
       resolved_pending,
+      publication,
       process_id,
       dispatch_id,
     });
@@ -42,6 +44,7 @@ class ProcessDispatchsRepository implements IProcessDispatchsRepository {
     has_pending,
     status_pending,
     resolved_pending,
+    publication,
     process_id,
     dispatch_id,
   }: IUpdateProcessDispatchDTO): Promise<ProcessDispatch> {
@@ -50,6 +53,7 @@ class ProcessDispatchsRepository implements IProcessDispatchsRepository {
       has_pending,
       status_pending,
       resolved_pending,
+      publication,
       process_id,
       dispatch_id,
     });
@@ -138,78 +142,6 @@ class ProcessDispatchsRepository implements IProcessDispatchsRepository {
     const [process_dispatchs, total] = await queryBuilder.getManyAndCount();
 
     return { total, process_dispatchs };
-  }
-
-  public async findDispatchPendentActualTotal(
-    dispatch_id: string,
-  ): Promise<number> {
-    const queryBuilder = this.repository.createQueryBuilder('process_dispatch');
-
-    queryBuilder
-      .where((qb) => {
-        const subQuery = qb
-          .subQuery()
-          .select('process_dispatch.id')
-          .from(ProcessDispatch, 'process_dispatch')
-          .where('process_dispatch.dispatch_id = :dispatch_id')
-          .orderBy(
-            'process_dispatch.process_id, process_dispatch.created_at',
-            'DESC',
-          )
-          .distinctOn(['process_dispatch.process_id'])
-          .getQuery();
-
-        return `process_dispatch.id IN (${subQuery})`;
-      })
-      .andWhere(
-        new Brackets((we) => {
-          we.where('has_pending = true').andWhere('resolved_pending = false');
-        }),
-      )
-      .setParameter('dispatch_id', dispatch_id);
-
-    const amount = (await queryBuilder.getMany()).length;
-
-    return amount;
-  }
-
-  public async findDispatchResolvedActualTotal(
-    dispatch_id: string,
-  ): Promise<number> {
-    const queryBuilder = this.repository.createQueryBuilder('process_dispatch');
-
-    queryBuilder
-      .where((qb) => {
-        const subQuery = qb
-          .subQuery()
-          .select('process_dispatch.id')
-          .from(ProcessDispatch, 'process_dispatch')
-          .where('process_dispatch.dispatch_id = :dispatch_id')
-          .orderBy(
-            'process_dispatch.process_id, process_dispatch.created_at',
-            'DESC',
-          )
-          .distinctOn(['process_dispatch.process_id'])
-          .getQuery();
-
-        return `process_dispatch.id IN (${subQuery})`;
-      })
-      .andWhere(
-        new Brackets((we) => {
-          we.where('has_pending = false').orWhere(
-            new Brackets((we2) => {
-              we2
-                .where('has_pending = true')
-                .andWhere('resolved_pending = true');
-            }),
-          );
-        }),
-      )
-      .setParameter('dispatch_id', dispatch_id);
-
-    const amount = (await queryBuilder.getMany()).length;
-
-    return amount;
   }
 }
 
