@@ -79,7 +79,7 @@ class UsersController {
     );
 
     const page_verified = Number(page ?? 0);
-    const rows_verified = Number(rows ?? 10);
+    const rows_verified = Number(rows ?? 0);
     const ordenation_verified = String(ordenation ?? 'name');
     const name_verified = name ? String(name) : null;
     const email_verified = email ? String(email) : null;
