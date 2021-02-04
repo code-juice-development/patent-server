@@ -20,14 +20,17 @@ const MailJob = new Bull('MailJob', {
 MailJob.process(async (job, done) => {
   const { model_email, client }: IMailJobData = job.data;
 
-  await Mail.sendMail({
-    from: process.env.MAIL_FROM,
-    to: `${client.name} <${client.email}>`,
-    subject: 'Atualização do Processo',
-    html: model_email,
-  });
-
-  done(null, { message: 'Envio de E-mail completo' });
+  try {
+    await Mail.sendMail({
+      from: process.env.MAIL_FROM,
+      to: `${client.name} <${client.email}>`,
+      subject: 'Atualização do Processo',
+      html: model_email,
+    });
+    done(null, { message: 'Envio de E-mail completo' });
+  } catch (error) {
+    done(new Error('Erro ao Enviar o e-mail'), { error });
+  }
 });
 
 export default MailJob;
