@@ -88,6 +88,8 @@ class CreateProcessService {
         const has_pending = !!dispatch.deadline;
         const resolved_pending = false;
         const publication = dateFormatter.toDateString();
+        const complement = '';
+        const annotation = '';
         const process_id = process.id;
 
         const dateLimit = new Date(
@@ -105,6 +107,8 @@ class CreateProcessService {
           status_pending,
           resolved_pending,
           publication,
+          complement,
+          annotation,
           process_id,
           dispatch_id,
         });

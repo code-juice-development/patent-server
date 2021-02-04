@@ -21,6 +21,7 @@ interface ICreateProcessDispatchJobData {
 interface IXMLModelProcessoDespacho {
   codigo: string;
   nome: string;
+  'texto-complementar': string;
 }
 
 interface IXMLModelProcesso {
@@ -92,6 +93,7 @@ CreateProcessUpdateJob.process(async (job, done) => {
       if (process) {
         const { despacho } = despachos;
         const { codigo } = despacho;
+        const { 'texto-complementar': textoComplementar } = despacho;
 
         const dispatch = await dispatchsRepository.findByCode(codigo);
 
@@ -114,6 +116,10 @@ CreateProcessUpdateJob.process(async (job, done) => {
           const has_pending = !!dispatch.deadline;
           const resolved_pending = false;
           const publication = date;
+          const complement = textoComplementar
+            ? Object.values(textoComplementar).shift() ?? ''
+            : '';
+          const annotation = '';
           const process_id = process.id;
           const dispatch_id = dispatch.id;
 
@@ -145,6 +151,8 @@ CreateProcessUpdateJob.process(async (job, done) => {
             status_pending,
             resolved_pending,
             publication,
+            complement,
+            annotation,
             process_id,
             dispatch_id,
           });
@@ -168,6 +176,7 @@ CreateProcessUpdateJob.process(async (job, done) => {
       description,
     });
   } catch (error) {
+    console.log(error);
     done(new Error('Erro ao Atualizar os Processos'), { error });
   } finally {
     await fs.unlink(path);

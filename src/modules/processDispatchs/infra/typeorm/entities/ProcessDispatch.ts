@@ -29,6 +29,12 @@ class ProcessDispatch {
   publication: string;
 
   @Column()
+  complement: string;
+
+  @Column()
+  annotation: string;
+
+  @Column()
   process_id: string;
 
   @ManyToOne((_type) => Process, (process) => process.process_dispatchs, {

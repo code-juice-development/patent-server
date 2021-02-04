@@ -1,27 +1,10 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
-import UpdateProcessDispatchPendingService from '@modules/processDispatchs/services/UpdateProcessDispatchPendingService';
 import ListProcessDispatchsIndexedService from '@modules/processDispatchs/services/ListProcessDispatchsIndexedService';
 import ShowProcessDispatchService from '@modules/processDispatchs/services/ShowProcessDispatchService';
 
 class ProcessDispatchsController {
-  public async update(request: Request, response: Response): Promise<Response> {
-    const { id } = request.params;
-    const { resolved_pending } = request.body;
-
-    const updateProcessDispatchPendingService = container.resolve(
-      UpdateProcessDispatchPendingService,
-    );
-
-    const processdispatch = await updateProcessDispatchPendingService.execute({
-      id,
-      resolved_pending,
-    });
-
-    return response.json(processdispatch);
-  }
-
   public async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 

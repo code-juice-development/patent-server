@@ -22,6 +22,8 @@ class FakeProcessDispatchsRepository implements IProcessDispatchsRepository {
     status_pending,
     resolved_pending,
     publication,
+    complement,
+    annotation,
     process_id,
     dispatch_id,
   }: ICreateProcessDispatchDTO): Promise<ProcessDispatch> {
@@ -35,6 +37,8 @@ class FakeProcessDispatchsRepository implements IProcessDispatchsRepository {
       status_pending,
       resolved_pending,
       publication,
+      complement,
+      annotation,
       process_id,
       dispatch_id,
     });
@@ -50,6 +54,8 @@ class FakeProcessDispatchsRepository implements IProcessDispatchsRepository {
     status_pending,
     resolved_pending,
     publication,
+    complement,
+    annotation,
     process_id,
     dispatch_id,
   }: IUpdateProcessDispatchDTO): Promise<ProcessDispatch> {
@@ -62,6 +68,8 @@ class FakeProcessDispatchsRepository implements IProcessDispatchsRepository {
       status_pending,
       resolved_pending,
       publication,
+      complement,
+      annotation,
       process_id,
       dispatch_id,
     });
@@ -79,6 +87,21 @@ class FakeProcessDispatchsRepository implements IProcessDispatchsRepository {
 
     Object.assign(processDispatch, {
       resolved_pending,
+    });
+
+    return processDispatch ?? new ProcessDispatch();
+  }
+
+  public async updateAnnotation(
+    id: string,
+    annotation: string,
+  ): Promise<ProcessDispatch> {
+    const processDispatch = this.processDispatchs.find(
+      (actualProcessDispatch) => actualProcessDispatch.id === id,
+    );
+
+    Object.assign(processDispatch, {
+      annotation,
     });
 
     return processDispatch ?? new ProcessDispatch();

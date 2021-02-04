@@ -9,6 +9,10 @@ interface IUpdateProcessDispatchDTO {
 
   publication: string;
 
+  complement: string;
+
+  annotation: string;
+
   process_id: string;
 
   dispatch_id: string;

@@ -22,6 +22,8 @@ class ProcessDispatchsRepository implements IProcessDispatchsRepository {
     status_pending,
     resolved_pending,
     publication,
+    complement,
+    annotation,
     process_id,
     dispatch_id,
   }: ICreateProcessDispatchDTO): Promise<ProcessDispatch> {
@@ -30,6 +32,8 @@ class ProcessDispatchsRepository implements IProcessDispatchsRepository {
       status_pending,
       resolved_pending,
       publication,
+      complement,
+      annotation,
       process_id,
       dispatch_id,
     });
@@ -45,6 +49,8 @@ class ProcessDispatchsRepository implements IProcessDispatchsRepository {
     status_pending,
     resolved_pending,
     publication,
+    complement,
+    annotation,
     process_id,
     dispatch_id,
   }: IUpdateProcessDispatchDTO): Promise<ProcessDispatch> {
@@ -54,6 +60,8 @@ class ProcessDispatchsRepository implements IProcessDispatchsRepository {
       status_pending,
       resolved_pending,
       publication,
+      complement,
+      annotation,
       process_id,
       dispatch_id,
     });
@@ -70,6 +78,20 @@ class ProcessDispatchsRepository implements IProcessDispatchsRepository {
     const processDispatch = this.repository.create({
       id,
       resolved_pending,
+    });
+
+    await this.repository.save(processDispatch);
+
+    return processDispatch;
+  }
+
+  public async updateAnnotation(
+    id: string,
+    annotation: string,
+  ): Promise<ProcessDispatch> {
+    const processDispatch = this.repository.create({
+      id,
+      annotation,
     });
 
     await this.repository.save(processDispatch);

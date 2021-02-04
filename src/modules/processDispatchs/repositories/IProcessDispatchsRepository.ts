@@ -37,6 +37,8 @@ interface IProcessDispatchsRepository {
     resolved_pending: boolean,
   ): Promise<ProcessDispatch>;
 
+  updateAnnotation(id: string, annotation: string): Promise<ProcessDispatch>;
+
   delete(id: string): Promise<void>;
 
   findAll(): Promise<ProcessDispatch[]>;

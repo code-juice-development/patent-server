@@ -18,6 +18,10 @@ interface IRequest {
 
   publication: string;
 
+  complement: string;
+
+  annotation: string;
+
   process_id: string;
 
   dispatch_id: string;
@@ -44,6 +48,8 @@ class CreateProcessDispatchService {
     status_pending,
     resolved_pending,
     publication,
+    complement,
+    annotation,
     process_id,
     dispatch_id,
   }: IRequest): Promise<ProcessDispatch> {
@@ -52,6 +58,8 @@ class CreateProcessDispatchService {
       status_pending,
       resolved_pending,
       publication,
+      complement,
+      annotation,
       process_id,
       dispatch_id,
     });
