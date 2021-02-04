@@ -124,8 +124,6 @@ class DispatchsRepository implements IDispatchsRepository {
       queryBuilder.skip(page * rows).take(rows);
     }
 
-    await this.findDispatchTotal();
-
     const [dispatchs, total] = await queryBuilder.getManyAndCount();
 
     return { total, dispatchs };
