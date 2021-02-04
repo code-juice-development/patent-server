@@ -10,6 +10,7 @@ import { container } from 'tsyringe';
 import IProcessesRepository from '@modules/process/repositories/IProcessesRepository';
 import IDispatchsRepository from '@modules/dispatchs/repositories/IDispatchsRepository';
 import IProcessDispatchsRepository from '@modules/processDispatchs/repositories/IProcessDispatchsRepository';
+import IProcessUpdatesRepository from '@modules/processUpdates/repositories/IProcessUpdatesRepository';
 
 import CreateProcessDispatchService from '@modules/processDispatchs/services/CreateProcessDispatchService';
 
@@ -59,6 +60,10 @@ CreateProcessUpdateJob.process(async (job, done) => {
     'ProcessDispatchsRepository',
   );
 
+  const processUpdatesRepository = container.resolve<IProcessUpdatesRepository>(
+    'ProcessUpdatesRepository',
+  );
+
   const createProcessDispatchService = container.resolve(
     CreateProcessDispatchService,
   );
@@ -69,7 +74,15 @@ CreateProcessUpdateJob.process(async (job, done) => {
     const dataJson: IXMLModel = JSON.parse(
       parser.toJson(xml, { reversible: true }),
     );
+
+    let description = '';
+
     const { data } = dataJson.revista;
+
+    /** Formated Date */
+    const [day, month, year] = data.split('/');
+    const dateFormatter = new Date(Number(year), Number(month), Number(day));
+    const date = dateFormatter.toDateString();
 
     for await (const processo of dataJson.revista.processo) {
       const { numero, despachos } = processo;
@@ -97,10 +110,6 @@ CreateProcessUpdateJob.process(async (job, done) => {
             }
           }
 
-          /** Formated Date */
-          const [day, month, year] = data.split('/');
-          const date = new Date(`${month}-${day}-${year}`).toDateString();
-
           /** Insert a new Process x Dispatch */
           const has_pending = !!dispatch.deadline;
           const resolved_pending = false;
@@ -108,8 +117,14 @@ CreateProcessUpdateJob.process(async (job, done) => {
           const process_id = process.id;
           const dispatch_id = dispatch.id;
 
+          const dateLimit = new Date(
+            dateFormatter.getFullYear(),
+            dateFormatter.getMonth(),
+            dateFormatter.getDate() + (dispatch.deadline ?? 0),
+          ).toLocaleDateString();
+
           const status_pending = has_pending
-            ? `Fase do Processo possui prazo de ${dispatch.deadline} dias, contanto a partir de ${data}`
+            ? `Despacho possui pendência, com prazo máximo até ${dateLimit}`
             : '';
 
           await createProcessDispatchService.execute({
@@ -121,10 +136,24 @@ CreateProcessUpdateJob.process(async (job, done) => {
             dispatch_id,
           });
 
+          description += `Processo Nº ${process.number} atualizado, Despacho ${dispatch.code} (${dispatch.description}).\n`;
+
           await processesRepository.update({ ...process, last_update: date });
+        } else {
+          description += `Processo Nº ${process.number} não atualizado, Despacho ${codigo} não cadastrado.\n`;
         }
       }
     }
+
+    const number = Number(dataJson.revista.numero);
+    const upload = new Date().toDateString();
+
+    await processUpdatesRepository.create({
+      number,
+      date,
+      upload,
+      description,
+    });
   } catch (error) {
     done(new Error('Erro ao Atualizar os Processos'), { error });
   } finally {

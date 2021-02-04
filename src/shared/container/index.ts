@@ -17,6 +17,9 @@ import ProcessesRepository from '@modules/process/infra/typeorm/repositories/Pro
 import IProcessDispatchsRepository from '@modules/processDispatchs/repositories/IProcessDispatchsRepository';
 import ProcessDispatchsRepository from '@modules/processDispatchs/infra/typeorm/repositories/ProcessDispatchsRepository';
 
+import IProcessUpdatesRepository from '@modules/processUpdates/repositories/IProcessUpdatesRepository';
+import ProcessUpdatesRepository from '@modules/processUpdates/infra/typeorm/repositories/ProcessUpdatesRepository';
+
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
   UsersRepository,
@@ -40,4 +43,9 @@ container.registerSingleton<IProcessRepository>(
 container.registerSingleton<IProcessDispatchsRepository>(
   'ProcessDispatchsRepository',
   ProcessDispatchsRepository,
+);
+
+container.registerSingleton<IProcessUpdatesRepository>(
+  'ProcessUpdatesRepository',
+  ProcessUpdatesRepository,
 );

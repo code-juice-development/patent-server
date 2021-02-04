@@ -83,13 +83,21 @@ class CreateProcessService {
       const dispatch = await this.dispatchsRepository.findById(dispatch_id);
 
       if (dispatch) {
+        const dateFormatter = new Date(process.created_at);
+
         const has_pending = !!dispatch.deadline;
         const resolved_pending = false;
-        const publication = new Date(process.created_at).toDateString();
+        const publication = dateFormatter.toDateString();
         const process_id = process.id;
 
+        const dateLimit = new Date(
+          dateFormatter.getFullYear(),
+          dateFormatter.getMonth(),
+          dateFormatter.getDate() + (dispatch.deadline ?? 0),
+        ).toLocaleDateString();
+
         const status_pending = has_pending
-          ? `Despacho possui prazo de ${dispatch.deadline} dias, contanto a partir de ${publication}`
+          ? `Despacho possui pendência, com prazo máximo até ${dateLimit}`
           : '';
 
         await this.processDispatchsRepository.create({
@@ -99,6 +107,18 @@ class CreateProcessService {
           publication,
           process_id,
           dispatch_id,
+        });
+
+        await this.processesRepository.update({
+          id: process.id,
+          number,
+          brand,
+          kind,
+          presentation,
+          last_update: publication,
+          birthday,
+          filed,
+          client_id,
         });
       }
     }
