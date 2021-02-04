@@ -14,7 +14,7 @@ import errorHandler from '@shared/infra/http/middlewares/errorHandler';
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: process.env.CROSS_ORIGIN }));
 app.use(routes);
 app.use(errors());
 app.use(errorHandler);
