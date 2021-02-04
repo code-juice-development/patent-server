@@ -122,6 +122,19 @@ class FakeProcessDispatchsRepository implements IProcessDispatchsRepository {
     return processDispatchs;
   }
 
+  public async findByProcessDispatchId(
+    process_id: string,
+    dispatch_id: string,
+  ): Promise<ProcessDispatch[]> {
+    const processDispatchs = this.processDispatchs.filter(
+      (actualProcessDispatch) =>
+        actualProcessDispatch.process_id === process_id &&
+        actualProcessDispatch.dispatch_id === dispatch_id,
+    );
+
+    return processDispatchs;
+  }
+
   /**
    * @todo Include ordering
    */

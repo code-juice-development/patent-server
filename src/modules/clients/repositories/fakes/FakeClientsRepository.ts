@@ -71,6 +71,10 @@ class FakeClientsRepository implements IClientsRepository {
     return this.clients;
   }
 
+  public async countAll(): Promise<number> {
+    return this.clients.length;
+  }
+
   public async findById(id: string): Promise<Client | undefined> {
     const client = this.clients.find((actualClient) => actualClient.id === id);
 

@@ -127,6 +127,19 @@ CreateProcessUpdateJob.process(async (job, done) => {
             ? `Despacho possui pendência, com prazo máximo até ${dateLimit}`
             : '';
 
+          /** Delete previous identicals Process Dispatchs, for congruence of data */
+          const processDispatchs = await processDispatchsRepository.findByProcessDispatchId(
+            process_id,
+            dispatch_id,
+          );
+
+          for await (const processDispatchIdentical of processDispatchs) {
+            await processDispatchsRepository.delete(
+              processDispatchIdentical.id,
+            );
+          }
+
+          /** Create new Process Dispatch */
           await createProcessDispatchService.execute({
             has_pending,
             status_pending,

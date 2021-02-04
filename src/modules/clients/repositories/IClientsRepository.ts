@@ -38,6 +38,8 @@ interface IClientsRepository {
 
   findAll(): Promise<Client[]>;
 
+  countAll(): Promise<number>;
+
   findById(id: string): Promise<Client | undefined>;
 
   findByEmail(email: string): Promise<Client | undefined>;

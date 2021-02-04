@@ -87,6 +87,10 @@ class FakeProcessesRepository implements IProcessesRepository {
     return this.processes;
   }
 
+  public async countAll(): Promise<number> {
+    return this.processes.length;
+  }
+
   public async findById(id: string): Promise<Process | undefined> {
     const process = this.processes.find(
       (actualProcess) => actualProcess.id === id,

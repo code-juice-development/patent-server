@@ -63,6 +63,14 @@ class ClientsRepository implements IClientsRepository {
     return clients;
   }
 
+  public async countAll(): Promise<number> {
+    const queryBuilder = this.repository.createQueryBuilder('client');
+
+    const count = await queryBuilder.getCount();
+
+    return count;
+  }
+
   public async findById(id: string): Promise<Client | undefined> {
     const client = await this.repository.findOne(id);
 

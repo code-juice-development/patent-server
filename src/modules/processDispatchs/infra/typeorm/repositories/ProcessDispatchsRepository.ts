@@ -118,6 +118,18 @@ class ProcessDispatchsRepository implements IProcessDispatchsRepository {
     return processDispatchs;
   }
 
+  public async findByProcessDispatchId(
+    process_id: string,
+    dispatch_id: string,
+  ): Promise<ProcessDispatch[]> {
+    const processDispatchs = this.repository.find({
+      where: { process_id, dispatch_id },
+      relations: ['dispatch'],
+    });
+
+    return processDispatchs;
+  }
+
   public async findIndexed({
     page,
     rows,

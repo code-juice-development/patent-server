@@ -46,6 +46,8 @@ interface IProcessRepository {
 
   findAll(): Promise<Process[]>;
 
+  countAll(): Promise<number>;
+
   findAllBirthdays(): Promise<Process[]>;
 
   findById(id: string): Promise<Process | undefined>;

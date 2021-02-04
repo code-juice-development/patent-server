@@ -47,6 +47,11 @@ interface IProcessDispatchsRepository {
 
   findByDispatchId(dispatch_id: string): Promise<ProcessDispatch[]>;
 
+  findByProcessDispatchId(
+    process_id: string,
+    dispatch_id: string,
+  ): Promise<ProcessDispatch[]>;
+
   findIndexed(data: IDataFindIndexed): Promise<IResultFindIndexed>;
 }
 

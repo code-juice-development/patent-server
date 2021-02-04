@@ -82,6 +82,14 @@ class ProcessesRepository implements IProcessRepository {
     return processes;
   }
 
+  public async countAll(): Promise<number> {
+    const queryBuilder = this.repository.createQueryBuilder('process');
+
+    const count = await queryBuilder.getCount();
+
+    return count;
+  }
+
   public async findAllBirthdays(): Promise<Process[]> {
     const queryBuilder = this.repository.createQueryBuilder('process');
 
