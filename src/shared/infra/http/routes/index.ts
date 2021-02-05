@@ -22,4 +22,6 @@ routes.use('/process-updates', processUpdatesRouter);
 routes.use('/public/clients', clientsPublicRouter);
 routes.use('/public/processes', processesPublicRouter);
 
+routes.use('/', (_request, response) => response.send('Its Alive!'));
+
 export default routes;
