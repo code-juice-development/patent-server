@@ -20,4 +20,4 @@ app.use(errors());
 app.use(errorHandler);
 
 // eslint-disable-next-line no-console
-app.listen(3333, () => console.log('🚀 Server launched'));
+app.listen(process.env.PORT || 3333, () => console.log('🚀 Server launched'));
