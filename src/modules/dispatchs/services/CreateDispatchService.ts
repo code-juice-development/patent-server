@@ -44,14 +44,6 @@ class CreateDispatchService {
     model_email,
     after_sale,
   }: IRequest): Promise<Dispatch> {
-    const dispatchWithSameName = await this.dispatchsRepository.findByName(
-      name,
-    );
-
-    if (dispatchWithSameName) {
-      throw new AppError('Já existe um Despacho cadastrado com este Nome');
-    }
-
     const dispatchWithSameCode = await this.dispatchsRepository.findByCode(
       code,
     );
