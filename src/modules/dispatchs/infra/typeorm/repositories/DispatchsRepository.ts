@@ -114,11 +114,26 @@ class DispatchsRepository implements IDispatchsRepository {
   }: IDataFindIndexed): Promise<IResultFindIndexed> {
     const queryBuilder = this.repository.createQueryBuilder('dispatchs');
 
+    const { description } = filter;
+
     const filters = Object.fromEntries(
-      Object.entries(filter).filter((actualFilter) => actualFilter[1] !== null),
+      Object.entries(filter).filter(
+        (actualFilter) =>
+          actualFilter[1] !== null &&
+          !['description'].includes(actualFilter[0]),
+      ),
     );
 
     queryBuilder.where(filters).orderBy(ordenation);
+
+    if (description) {
+      description.split(' ').forEach((word) =>
+        queryBuilder.andWhere(
+          `translate(lower(dispatchs.description), 'àáâãäéèëêíìïîóòõöôúùüûç', 'aaaaaeeeeiiiiooooouuuuc') like 
+        '%'||translate(lower('${word}'), 'àáâãäéèëêíìïîóòõöôúùüûç', 'aaaaaeeeeiiiiooooouuuuc')||'%'`,
+        ),
+      );
+    }
 
     if (rows > 0) {
       queryBuilder.skip(page * rows).take(rows);

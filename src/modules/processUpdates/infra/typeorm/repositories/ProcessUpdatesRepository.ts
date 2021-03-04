@@ -92,9 +92,11 @@ class ProcessUpdatesRepository implements IProcessUpdatesRepository {
     queryBuilder.where(filters).orderBy(ordenation);
 
     if (description) {
-      queryBuilder.andWhere(
-        `translate(lower(process_update.description), 'àáâãäéèëêíìïîóòõöôúùüûç', 'aaaaaeeeeiiiiooooouuuuc') like 
-        '%'||translate(lower('${description}'), 'àáâãäéèëêíìïîóòõöôúùüûç', 'aaaaaeeeeiiiiooooouuuuc')||'%'`,
+      description.split(' ').forEach((word) =>
+        queryBuilder.andWhere(
+          `translate(lower(process_update.description), 'àáâãäéèëêíìïîóòõöôúùüûç', 'aaaaaeeeeiiiiooooouuuuc') like 
+        '%'||translate(lower('${word}'), 'àáâãäéèëêíìïîóòõöôúùüûç', 'aaaaaeeeeiiiiooooouuuuc')||'%'`,
+        ),
       );
     }
 

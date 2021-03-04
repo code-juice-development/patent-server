@@ -135,19 +135,37 @@ class ProcessesRepository implements IProcessRepository {
   }: IDataFindIndexed): Promise<IResultFindIndexed> {
     const queryBuilder = this.repository.createQueryBuilder('process');
 
-    const { birthday, last_update } = filter;
-
-    const { pendent } = filter;
+    const { brand, kind, pendent, birthday, last_update } = filter;
 
     const filters = Object.fromEntries(
       Object.entries(filter).filter(
         (actualFilter) =>
           actualFilter[1] !== null &&
-          !['pendent', 'birthday', 'last_update'].includes(actualFilter[0]),
+          !['class', 'kind', 'pendent', 'birthday', 'last_update'].includes(
+            actualFilter[0],
+          ),
       ),
     );
 
     queryBuilder.where(filters);
+
+    if (brand) {
+      brand.split(' ').forEach((word) =>
+        queryBuilder.andWhere(
+          `translate(lower(process.brand), 'àáâãäéèëêíìïîóòõöôúùüûç', 'aaaaaeeeeiiiiooooouuuuc') like 
+        '%'||translate(lower('${word}'), 'àáâãäéèëêíìïîóòõöôúùüûç', 'aaaaaeeeeiiiiooooouuuuc')||'%'`,
+        ),
+      );
+    }
+
+    if (kind) {
+      kind.split(' ').forEach((word) =>
+        queryBuilder.andWhere(
+          `translate(lower(process.kind), 'àáâãäéèëêíìïîóòõöôúùüûç', 'aaaaaeeeeiiiiooooouuuuc') like 
+        '%'||translate(lower('${word}'), 'àáâãäéèëêíìïîóòõöôúùüûç', 'aaaaaeeeeiiiiooooouuuuc')||'%'`,
+        ),
+      );
+    }
 
     if (pendent !== null) {
       queryBuilder.andWhere((subQueryBuilder) => {

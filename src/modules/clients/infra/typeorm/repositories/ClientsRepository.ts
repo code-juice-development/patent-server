@@ -109,11 +109,25 @@ class ClientsRepository implements IClientsRepository {
   }: IDataFindIndexed): Promise<IResultFindIndexed> {
     const queryBuilder = this.repository.createQueryBuilder('clients');
 
+    const { name } = filter;
+
     const filters = Object.fromEntries(
-      Object.entries(filter).filter((actualFilter) => actualFilter[1] !== null),
+      Object.entries(filter).filter(
+        (actualFilter) =>
+          actualFilter[1] !== null && !['name'].includes(actualFilter[0]),
+      ),
     );
 
     queryBuilder.where(filters).orderBy(ordenation);
+
+    if (name) {
+      name.split(' ').forEach((word) =>
+        queryBuilder.andWhere(
+          `translate(lower(clients.name), 'àáâãäéèëêíìïîóòõöôúùüûç', 'aaaaaeeeeiiiiooooouuuuc') like 
+        '%'||translate(lower('${word}'), 'àáâãäéèëêíìïîóòõöôúùüûç', 'aaaaaeeeeiiiiooooouuuuc')||'%'`,
+        ),
+      );
+    }
 
     if (rows > 0) {
       queryBuilder.skip(page * rows).take(rows);
