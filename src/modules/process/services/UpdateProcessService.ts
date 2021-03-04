@@ -50,7 +50,7 @@ class UpdateProcessService {
 
     if (processWithSameNumber && processWithSameNumber.id !== id) {
       throw new AppError('Já existe um Processo registrado com esse Número');
-    }
+    }    
 
     const process = await this.processRepository.update({
       id,
