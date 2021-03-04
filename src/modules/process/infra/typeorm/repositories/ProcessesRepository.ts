@@ -141,7 +141,7 @@ class ProcessesRepository implements IProcessRepository {
       Object.entries(filter).filter(
         (actualFilter) =>
           actualFilter[1] !== null &&
-          !['class', 'kind', 'pendent', 'birthday', 'last_update'].includes(
+          !['brand', 'kind', 'pendent', 'birthday', 'last_update'].includes(
             actualFilter[0],
           ),
       ),
