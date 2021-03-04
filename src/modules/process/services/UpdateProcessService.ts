@@ -52,14 +52,6 @@ class UpdateProcessService {
       throw new AppError('Já existe um Processo registrado com esse Número');
     }
 
-    const processWithSameBrand = await this.processRepository.findByBrand(
-      brand,
-    );
-
-    if (processWithSameBrand && processWithSameBrand.id !== id) {
-      throw new AppError('Já existe um Processo registrado com essa Marca');
-    }
-
     const process = await this.processRepository.update({
       id,
       number,

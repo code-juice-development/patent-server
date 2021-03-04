@@ -60,14 +60,6 @@ class CreateProcessService {
       throw new AppError('Já existe um Processo registrado com esse Número');
     }
 
-    const processWithSameBrand = await this.processesRepository.findByBrand(
-      brand,
-    );
-
-    if (processWithSameBrand) {
-      throw new AppError('Já existe um Processo registrado com essa Marca');
-    }
-
     const process = await this.processesRepository.create({
       number,
       brand,
